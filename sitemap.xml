@@ -35,6 +35,11 @@
   <priority>0.5000</priority>
  </url>
  <url>
+  <loc>http://blog.sp.or.at/2013/</loc>
+  <lastmod>2013-05-22</lastmod>
+  <priority>0.5000</priority>
+ </url>
+ <url>
   <loc>http://blog.sp.or.at/archive.html</loc>
   <lastmod>2013-05-22</lastmod>
   <priority>0.5000</priority>
@@ -571,6 +576,11 @@
  </url>
  <url>
   <loc>http://blog.sp.or.at/posts/201206git-smart-protocol-via-websockets-proof.html</loc>
+  <lastmod>2013-05-22</lastmod>
+  <priority>0.5000</priority>
+ </url>
+ <url>
+  <loc>http://blog.sp.or.at/posts/new-blog.html</loc>
   <lastmod>2013-05-22</lastmod>
   <priority>0.5000</priority>
  </url>

@@ -5,6 +5,25 @@
         <div id="container" style="width:560px">
             
         <div class="postbox">
+        <h1><a href="posts/200911kvm-qemu-and-magic-of-ubuntu-vm-builder.html">kvm, qemu and the magic of ubuntu-vm-builder</a></h1>
+            <div class="meta" style="background-color: rgb(234, 234, 234); ">                    
+                <span class="authordate">
+                    Posted: 2009-11-11 08:25
+                </span>
+                <br><span class="tags">Tags: 
+                            <a class="tag" href="categories/technology.html"><span class="badge badge-info">Technology</span></a>
+                            <a class="tag" href="categories/android.html"><span class="badge badge-info">Android</span></a>
+                            <a class="tag" href="categories/free-software.html"><span class="badge badge-info">free software</span></a>
+                            <a class="tag" href="categories/ubuntu.html"><span class="badge badge-info">Ubuntu</span></a>
+                </span>
+            </div>
+        <p>As I <a href="http://techandsp.blogspot.com/2009/11/my-android-repositories.html">noted</a> two days ago I was unable to build Android on Ubuntu 9.10 x86-64 and thus needed to set up a virtual machine.<br><br>At first I went for my preferred virtualization solution, <a href="http://www.virtualbox.org/">VirtualBox</a> and had to notice that even though I assigned all 4 processor cores of my workstation (along with 2GiB of memory) to the virtual machine building was painfully slow. I immediately ditched the idea of using  VirtualBox again and decided to give something new to me a try: the combination of <a href="http://www.linux-kvm.org/page/Main_Page">kvm</a> and <a href="http://www.qemu.org/">qemu</a>.<br><br>Having Intel VT-x support built into my workstation's processor I thought that this combination should give better performance, and I wasn't disappointed. To be honest, I am astonished on how fast the beast is now. Disk speed still seems to be not as fast as running things natively, but there must be a downside somewhere. :-)<br><br>After a bit of googling I also found that <a href="https://launchpad.net/vmbuilder">ubuntu-vm-builder</a> exists, which simplifies virtual system creation tremendously.<br><br>My Android working tree is being synchronized right now, which means that I should be able to start building in a few minutes time. I hope the virtual machine stays as fast as it is right now during the build and I hope everything goes well.</p>
+            
+    <p>
+        <a href="posts/200911kvm-qemu-and-magic-of-ubuntu-vm-builder.html#disqus_thread" data-disqus-identifier="cache/posts/200911kvm-qemu-and-magic-of-ubuntu-vm-builder.html">Comments</a>
+
+        </p></div>
+        <div class="postbox">
         <h1><a href="posts/200911update-on-proprietary-maemo-sdk.html">An update on the proprietary Maemo SDK installer</a></h1>
             <div class="meta" style="background-color: rgb(234, 234, 234); ">                    
                 <span class="authordate">
@@ -174,24 +193,6 @@
             
     <p>
         <a href="posts/200906python-interface-validation.html#disqus_thread" data-disqus-identifier="cache/posts/200906python-interface-validation.html">Comments</a>
-
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/200906update-manager-weekly-update-2.html">update-manager weekly update #2</a></h1>
-            <div class="meta" style="background-color: rgb(234, 234, 234); ">                    
-                <span class="authordate">
-                    Posted: 2009-06-19 03:27
-                </span>
-                <br><span class="tags">Tags: 
-                            <a class="tag" href="categories/gsoc.html"><span class="badge badge-info">gsoc</span></a>
-                            <a class="tag" href="categories/python.html"><span class="badge badge-info">python</span></a>
-                            <a class="tag" href="categories/debian.html"><span class="badge badge-info">Debian</span></a>
-                            <a class="tag" href="categories/update-manager.html"><span class="badge badge-info">update-manager</span></a>
-                            <a class="tag" href="categories/free-software.html"><span class="badge badge-info">free software</span></a>
-                </span>
-            </div>
-        <p>First of all: yes, I skipped update #1. I was rather busy with some assignments and exams at university and didn't work that much on update-manager the past two weeks.<br><br>Anyways, this update contains everything that has happened since <a href="http://blog.peijnik.at/2009/05/27/update-manager-weekly-update-0/" title="update-manager weekly update #0 @blog.peijnik.at">update #0</a>.<br><br><strong>Changelog fetching</strong><br><br>The changelog fetching code has been added to update-manager. This means that the changelog will be shown in the details section now and should look the same it looked before. However, I have only written that code for Debian so far, but the Ubuntu part is on my TODO list.<br><br><strong>Documentation</strong><br><br>The documentation has been updated and uploaded to alioth and can be viewed <a href="http://update-manager.alioth.debian.org/doc/current/" title="update-manager documentation @update-manager.alioth.debian.org">here</a>. I have set up a python environment on alioth which allows building the documentation directly, rather than building it locally and uploading it then. Basically this works by having a separate python packages directory, containing some mock modules that are needed (think gtk and friends here), allowing us to build the docs without having to install all dependencies.<br>I am planning on elaborating on this method and how to create such an environment in one of my upcoming posts, so stay tuned if you could use something like this too.<br><br>Additionally to this environment the documentation has been updated a great deal, including more modules and containing documentation for previously undocumented methods and classes.<br><br><strong>Application module</strong><br><br>I have reworked some aspects of the UpdateManager.Application module, allowing me to do unit testing on pretty much every aspect of the class. The problem I fixed here is that Application directly called sys.exit when something went wrong and now raises exceptions, which contain the status code and are handled in the respective scripts (ie. "update-manager").<br><br><strong>Gtk Frontend and updates from another thread</strong><br><br>One thing I fixed was the problem caused by the changelog fetching code running in a separate thread and invoking a callback function that updates the UI. It seems as Gtk isn't that happy when you do this and the UI wouldn't be updated immediatly (it seemed that this only happened after some events, like scrolling the update list). This has been reworked and the callback function now checks if it was called from the main thread or not and calls gtk.gdk.threads_enter/_leave accordingly.<br><br><strong>Changelog Viewer</strong><br><br>After finishing the changelog fetching code I added the ChangelogViewer widget from previous update-manager versions again, supporting creation of links to launchpad and debian bugs (ie. LP:NNNNNN and Closes: #NNNNNN are now links) and displaying the version number in bold, among other things.<br><br><strong>Weeding out UpdateManager.Frontend.Gtk.utils</strong><br><br>Initially I just copied over the utils module from old update-manager to the new implementation, leaving every single function in there, but now I decided to weed out the module. The result is that only the functions actually used by this implementation remained in there. Related to this documentation of that module is pending and on my TODO list.<br><br><strong>Version number</strong><br><br>After a chat with my mentor we decided to bump update-manager's version to 0.200-pre. This should make it easier to distinguish from the old version and indicates that a lot has changed. The first release following the -pre series will be 0.200.0, which should then include all functionality old update-manager included.<br><br><strong>My TODO list for next week</strong><br><br>Ordered by priority<br></p><ul><br><li>Documentation of UpdateManager.Frontend.Gtk.utils and .ChangelogViewer modules</li><br><li>Ubuntu Distribution Specific code</li><br><li>More unit tests</li><br><li>Update list downloading in Gtk frontend</li><br></ul><p>
-        <a href="posts/200906update-manager-weekly-update-2.html#disqus_thread" data-disqus-identifier="cache/posts/200906update-manager-weekly-update-2.html">Comments</a>
 
         </p></div>
     
