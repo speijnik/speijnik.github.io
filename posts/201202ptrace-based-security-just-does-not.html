@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>ptrace-based security just does not work | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../">
+            Stephan's blog
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+                </li></ul><ul class="nav pull-right"><li>
+    <a href="#" id="sourcelink">Source</a>
+    </li>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>ptrace-based security just does not work</h1>
+
+    <hr><small>
+        Posted: <time class="published" datetime="2012-02-24T15:48:00+01:00">2012-02-24 15:48</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/ujail.html"><span class="badge badge-info">ujail</span></a>
+            <a class="tag" href="../categories/sandbox.html"><span class="badge badge-info">sandbox</span></a>
+            <a class="tag" href="../categories/ptrace.html"><span class="badge badge-info">ptrace</span></a>
+            <a class="tag" href="../categories/security.html"><span class="badge badge-info">security</span></a>
+            <a class="tag" href="../categories/gnulinux.html"><span class="badge badge-info">GNU/Linux</span></a>
+
+    </small>
+    <hr><p>In 2009 I <a href="http://techandsp.blogspot.com/2009/12/introducing-ujail-proof-of-concept.html">wrote</a> <a href="http://techandsp.blogspot.com/2009/12/ujail-use-cases-faqs-part-1-proof-of.html">about</a> building a ptrace-based sandboxing system named "ujail", including some basic proof of concepts.<br><br>I have been thinking about this idea for a long time now, but sadly did not have the time to implement it - until now.<br>Right now I am working on this idea again and whilst doing some research I came across a <a href="http://groups.google.com/group/linux.kernel/browse_thread/thread/4ef67613306dc260/b6fe32ed0fe7317a">thread</a> on the linux-kernel mailing list.<br>At first a problem with 64-bit binaries trapping into 32-bit syscall handling code via int 80 got me there. While this is awkward and keeps one from implementing a sandbox in userspace (due to not being able to access <i>TS_COMPAT</i>, as described in the thread) it led me to something else - a more severe problem.<br>Unfortunately I cannot remember who wrote this and am unable to recover the actual mail (if someone finds it I would be happy if you notified me), but someone mentioned race conditions when using <i>ptrace</i> as a security measure.<br><br>In short I came up with a proof of concept which works around possible limitations imposed by a ptrace-based security mechanism. For those in a hurry: you can find the code of the proof of concept at <a href="https://github.com/speijnik/ptrace_security_flaws">github</a>.<br>In the following parts of this article I would like to elaborate on the problem and how the proof of concept code exploits it.<br><a name="more"></a><br>The problem here is the fact that <i>PTRACE_SYSCALL</i> traps <b>before</b> the kernel actually fetches information from userspace.<br>Let me illustrate that with <i>sys_open</i>. Assume we are running a tracer which makes use of ptrace to get a <i>SIGTRAP</i> each time a tracee invokes a syscall and we want to impose limits on <i>sys_open</i> calls.<br><br>After a syscall has been invoked it would roughly work like this:<br><br>The tracer is notified, evaluates the registers as read using <i>PTRACE_GETREGS</i> and reads the first syscall argument's value (namely the path value) from the tracee. It then evaluates the value and decides whether to allow the syscall or not.<br>Now this is exactly the way ujail would have worked in its initial design. However, using this method there is a not-so-small attack vector which involves <b>all</b> values read from the tracee's memory.<br><br>You may now ask yourself what I am writing about, but it will make sense in a few moments, I promise.<br><br>There is a timespan between the tracer reading the <i>path</i> value from tracee's memory and the tracer actually resuming the tracee using <i>PTRACE_SYSCALL</i> which allows a potentially malicious thread inside the tracee to change the value of the memory <i>path</i> points to and thus circumvent any restriction imposed by the tracer. Changing the value is as simple as writing to the process memory, which is shared between threads, at just the right moment and to just the right position.<br>As writing to memory will not generate a trap the tracer could act upon the tracer would be unaware of the modification and it is just about to resume the tracee's execution - <i>jail broken</i>.<br><br>What is important here is just the right timing. The write has to happen after the tracer has read from the tracee's memory and before it resumes execution of the tracee. However, the tracer is most likely to employ some kind of decision-finding process here. This process will take time. It may actually involve some syscalls (think mutexes, semaphores and condition variables here). All in all enough time to swap values.<br><br>You may now think to yourself that it might be really hard to actually pull this one off and it probably is in normal circumstances. However, the possibility to do this alone should rule-out ptrace as a security measure completely.<br><br>The only way I believe this could be handled is triggering a hook inside the system call handlers themselves, just after all information has been pulled from userspace. These values are guaranteed not to be modifiable from within userspace and thus only these should be considered for making decisions. As a consequence ujail (and every other similar security measure out there) will have to be realized at least partly in kernel-space.<br><br>Feel free to leave comments, send me an email and/or point out any issues with the proof of concept code or my idea.</p>
+    
+    <ul class="pager"><li class="previous">
+            <a href="201106how-to-force-local-dns-resolver-to-be.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="201206git-smart-protocol-via-websockets-proof.html">Next post →</a>
+        </li>
+    </ul><div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="speijnikblog";
+            var disqus_url="http://blog.sp.or.at/posts/201202ptrace-based-security-just-does-not.html";
+        var disqus_title="ptrace-based security just does not work";
+        var disqus_identifier="cache/posts/201202ptrace-based-security-just-does-not.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+
+    </div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+    <!-- Social buttons -->
+    <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+    <a class="addthis_button_more">Share</a>
+    <ul><li><a class="addthis_button_facebook"></a>
+    </li><li><a class="addthis_button_google_plusone_share"></a>
+    </li><li><a class="addthis_button_linkedin"></a>
+    </li><li><a class="addthis_button_twitter"></a>
+    </li></ul></div>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>

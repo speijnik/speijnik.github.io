@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Android, Mythbusters and openness | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../">
+            Stephan's blog
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+                </li></ul><ul class="nav pull-right"><li>
+    <a href="#" id="sourcelink">Source</a>
+    </li>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>Android, Mythbusters and openness</h1>
+
+    <hr><small>
+        Posted: <time class="published" datetime="2009-11-08T04:49:00+01:00">2009-11-08 04:49</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/foss.html"><span class="badge badge-info">foss</span></a>
+            <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
+            <a class="tag" href="../categories/personal.html"><span class="badge badge-info">personal</span></a>
+            <a class="tag" href="../categories/gsoc.html"><span class="badge badge-info">gsoc</span></a>
+            <a class="tag" href="../categories/debian.html"><span class="badge badge-info">Debian</span></a>
+            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+
+    </small>
+    <hr><p>I have been reading a great many posts about Android lately, some consisting of criticism, some of praise and some simply addressing issues in the Android "community". Let's have a look at those.<br><br><strong>Matt Porter's </strong><strong>Android Mythbusters presentation</strong><strong> and Harald Welte's reaction<br></strong><br><br>I haven't seen the presentation live, but I had a look at <a href="http://tree.celinuxforum.org/CelfPubWiki/ELCEurope2009Presentations?action=AttachFile&amp;do=get&amp;target=Mythbusters_Android.pdf" title="Mythbusters_Android.pdf @ tree.celinux.org">the slides</a>. Impressing work done by Matt putting all this information together. However, we all knew that Android only (ab-)uses Linux, without making use of the GNU userland for a long time, didn't we?<br><br>In his presentation Matt has shown things such as Android's udev "replacement" that uses hardcoded values for device node creation and (on his <a href="http://laforge.gnumonks.org/weblog/2009/11/04/#20091104-android_mythbusters" title="Android Mythbusters (Matt Porter) comment @ laforge.gnumonks.org">blog</a>) Harald has then come up with a statement I have found to be very strong:<br></p><blockquote>The presentation shows how Google has simply thrown 5-10 years of Linux userspace evolution into the trashcan and re-implemented it partially for no reason.  Things like hard-coded device lists/permissions in object code rather than config files, the lack of support for hot-plugging devices (udev), the lack of kernel headers.  A libc that throws away System V IPC that every unix/Linux software developer takes for granted. The lack of complete POSIX threads.  I could continue this list, but hey, you should read those slides. now!</blockquote><br>Now both of these statements target technical details, but the root of the problem seems to be elsewhere.<br><br><strong>Where is my Android 2.0?</strong><br><br>Okay, that heading might not be making any sense in the context of this post at a first glance, but let me elaborate on that. Google and the Open Handset Alliance refer to Android as being an "Open Source" operating system, but the project is different from "real" Free Software projects: development takes place in a closed group and the results are shared with the community later on, when they are deemed to be ready.<br><br>This means that innovation also takes place behind closed curtains and that the community is not involved in the actual development process at all. Lately we have seen the result of that, as Motorola is bragging about working close with Google on Android 2.0 ("Eclair"), but the AOSP source trees, open for everyone to have a look at, show no signs of version 2.0. In fact no changes that might even remotely suggest the release of a new major version have been made public in the past few weeks. So where is the openess there?<br>Actually, the Motorola Droid has already shipped with Eclair on 6th, but still, there is no indication that Eclair will be made available to the broader public.<br><br>In short Android seems to be developed behind closed curtains, with hardly (read no) community input whatsoever and is sometimes released as Free Software, not what I would describe as an open development process.<br><br><strong>The Android Market problem</strong><br><br>As we have seen in the past Google is enforcing their copyright on proprietary applications that ship with pretty much every Android device, such as the Android Market. This has become really clear when Steve Kondik received  a cease and desist letter when packing the Google-proprietary applications into his ROMs. Okay, it's Google's right to enforce their copyright and there is nothing wrong with actually doing so, the thing I really have a problem with is something else: the Market is proprietary.<br><br>Now what this means should become rather clear. You can have an Android device without Google's proprietary bits, but with default settings you just do not have any way of installing additional software. In my opinion the Market should be freed by Google themselves, or the community has to react and come up with a free replacement to overcome the vendor lock-in. Oh, you might know a replacement called <a href="http://www.slideme.org">SlideMe</a> (or Mobentoo) already. Well, that bugger is proprietary too, so not a solution at all.<br><br><strong>Nokia and Maemo to the rescue</strong><br><br>In most discussions about the openness of Android someone throws in Nokia and <a href="http://www.maemo.org">Maemo</a>, as a solution to the dilemma. Reading all those positive comments I simply had to give it a try, but all my hopes were destroyed within a few minutes.<br><br>Let's start with the good news and let alone the reason why my hopes were destroyed for another minute or two. Maemo is based on Debian GNU/Linux and various Free Software components, such as GTK+, gstreamer, esd and friends. Most of the system is Free Software which is a good thing(tm) and reading all of this really got me into Maemo. Okay, some applications seem to be proprietary, but I am sure that could be fixed rather easily, so I could once for all use a truly open phone.<br><br>...and then came the <a href="http://repository.maemo.org/stable/fremantle/maemo-sdk-install_5.0.sh">SDK installer shell script</a>:<br><blockquote>#!/bin/sh<br># Copyright (C) 2006-2009 Nokia Corporation<br>#<br># This is proprietary software owned by Nokia Corporation.<br>#<br># Contact: Maemo Integration &lt;integration@maemo.org&gt;<br># Version: $Revision: 1110 $</blockquote><br>Now there is one question you should ask yourself: Why would someone trying to promote his platform as being open make the *installer* script for its SDK proprietary? Come on, it's an installer script, how much of your secret juice could be in there? What's the problem with people modifying it and working on this installer script in an open development environment?<br><br>I had high hopes for Nokia actually doing a bit better than Google, but it seems they've failed to do so. It may be me overreacting, but a proprietary SDK installer shell script scares me enough not to install the SDK and have a look at it for now nor to think about buying a Maemo-based device in the near future. Please Nokia, either get the facts straight or provide us with a free SDK to your free &amp; open platform.<br><br>So, in short, Google is bad at working with the community and creating a truly open development process, and Nokia simply fails in terms of not scaring off prospective developers for their open platform with the proprietary SDK installer. Do you have any solutions in terms of an open phone environment, apart from what OpenMoko has come up with?
+    
+    <ul class="pager"><li class="previous">
+            <a href="200911how-to-move-panels-in-gnome-228.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="200911android-roaming-detection-its.html">Next post →</a>
+        </li>
+    </ul><div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="speijnikblog";
+            var disqus_url="http://blog.sp.or.at/posts/200911android-mythbusters-and-openness.html";
+        var disqus_title="Android, Mythbusters and openness";
+        var disqus_identifier="cache/posts/200911android-mythbusters-and-openness.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+
+    </div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+    <!-- Social buttons -->
+    <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+    <a class="addthis_button_more">Share</a>
+    <ul><li><a class="addthis_button_facebook"></a>
+    </li><li><a class="addthis_button_google_plusone_share"></a>
+    </li><li><a class="addthis_button_linkedin"></a>
+    </li><li><a class="addthis_button_twitter"></a>
+    </li></ul></div>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>

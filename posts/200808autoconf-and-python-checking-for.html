@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Autoconf and Python: checking for modules | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../">
+            Stephan's blog
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+                </li></ul><ul class="nav pull-right"><li>
+    <a href="#" id="sourcelink">Source</a>
+    </li>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>Autoconf and Python: checking for modules</h1>
+
+    <hr><small>
+        Posted: <time class="published" datetime="2008-08-31T12:04:00+02:00">2008-08-31 12:04</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/foss.html"><span class="badge badge-info">foss</span></a>
+            <a class="tag" href="../categories/observations.html"><span class="badge badge-info">observations</span></a>
+            <a class="tag" href="../categories/nwu.html"><span class="badge badge-info">nwu</span></a>
+            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+
+    </small>
+    <hr><p>I am currently writing a Python application that makes use of GNU Autotools as build system and noticed that determining whether a specific Python module is installed is not that easy and no usable Autoconf macro exists. So I came up with <a href="http://blog.peijnik.at/wp-content/uploads/2008/08/python_module.m4" title="python_module.m4">my own solution</a>, which I would like to share with you.<br><br>The <em>AC_CHECK_PYTHON_MODULE</em> macro takes two arguments: The module name and optionally the variable name holding version information. This way it is not only possible to determine whether a module is installed (ie. loads in Python) on the current system, but also retrieve version information from that module.<br><br>The following examples checks whether the Crypto module is installed and retrieves its version information from Crypto.__version__:<br></p><blockquote>AC_CHECK_PYTHON_MODULE(Crypto, __version__)</blockquote><br>The macro itself does never report and error, but rather only a found/not found result. Error checking is up to the user and can be done via these two Autoconf variables:<br><ul><br><li>PYTHON_<em>&lt;MODULE_NAME&gt;</em></li><br><li>PYTHON_<em>&lt;MODULE_NAME&gt;</em>_VERSION</li><br></ul><br>PYTHON_<em>&lt;MODULE_NAME&gt;</em> is set to <em>"1"</em> if the module is present and <em>"0"</em> if not present.<br>PYTHON_<em>&lt;MODULE_NAME&gt;</em>_VERSION is only set when the version variable argument has been set and contains the version information of the module, if the module been found. If the module is not present this variable is also set to <em>"0"</em>.<br><br>The version variable argument is optional as I wrote, so the following invocation works too and only checks whether the distutils module is present:<br><blockquote>AC_CHECK_PYTHON_MODULE(distutils)</blockquote><br>As I wrote earlier in this article I would like to share this macro with you. You can download it <a href="http://blog.peijnik.at/wp-content/uploads/2008/08/python_module.m4" title="python_module.m4">here</a>.
+    
+    <ul class="pager"><li class="previous">
+            <a href="200808debian-gnulinux-50-on-samsung-p55-pro.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="200809update-google-chrome-good-or-evil-good.html">Next post →</a>
+        </li>
+    </ul><div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="speijnikblog";
+            var disqus_url="http://blog.sp.or.at/posts/200808autoconf-and-python-checking-for.html";
+        var disqus_title="Autoconf and Python: checking for modules";
+        var disqus_identifier="cache/posts/200808autoconf-and-python-checking-for.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+
+    </div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+    <!-- Social buttons -->
+    <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+    <a class="addthis_button_more">Share</a>
+    <ul><li><a class="addthis_button_facebook"></a>
+    </li><li><a class="addthis_button_google_plusone_share"></a>
+    </li><li><a class="addthis_button_linkedin"></a>
+    </li><li><a class="addthis_button_twitter"></a>
+    </li></ul></div>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>

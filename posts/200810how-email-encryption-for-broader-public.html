@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>How Email encryption for the broader public could be realized | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../">
+            Stephan's blog
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+                </li></ul><ul class="nav pull-right"><li>
+    <a href="#" id="sourcelink">Source</a>
+    </li>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>How Email encryption for the broader public could be realized</h1>
+
+    <hr><small>
+        Posted: <time class="published" datetime="2008-10-16T11:27:00+02:00">2008-10-16 11:27</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
+
+    </small>
+    <hr><p>After reading the <a href="http://yro.slashdot.org/yro/08/10/15/2222209.shtml" title="Every EMail In UK To Be Monitored">Every Email In UK To Be Monitored</a> article and its comments over at <a href="http://slashdot.org" title="News for nerds, stuff that matters">Slashdot</a> I once again felt like encrypting each and every Email I send using GPG/PGP. Now for this encryption to work the person I am sending a message to would need to have GPG/PGP set up too. A lot of technical-minded people already have this set up, but I can not expect everyone to be using encryption.<br><br>The reason for not everyone using GPG/PGP for encrypting their emails might be that, even though GPG/PGP have become a lot more usable for the end-user in the last few years, these programs are probably still too technical and thus hard to understand for non-technical users.<br><br>This is when I thought a little about how people could be made using public key encryption for E-Mails. After a bit of brain-storming an idea came to my mind, an idea I would like to present you with.<br><br><strong>Basic idea</strong><br><br>What about creating a program acting as both SMTP and POP3/IMAP proxy server that included all the logic to do encryption and would encrypt/decrypt messages transparently?<br>If this logic was moved out of Email clients we could get a solution working universally for each and every Email client out there.<br><a name="more"></a><br><br><strong>How this could work</strong><br><br>Imagine you sending an email to someone you've never sent an email to. You write the message in your Email client as you are used to and hit the send button. Now, instead of connecting to your SMTP server the E-Mail client would connect to the Email proxy program and submit the message there.<br><br>At this point the program would check the email sender and recipient. If the sender does have a public/private key pair and the recipient's public key is known the program would prompt you for the passphrase to your encryption key. After entering the passphrase and hitting a button (send, sign, encrypt, I guess you can think of a more appropriate name) again the message would be encrypted and then forwarded to your SMTP server.<br><br>On the other hand, if the public key of the recipient is not known (and cannot be fetched off key servers) the program could send a message informing the recipient that you wanted to encrypt your email, but were unable to do so, explain that this program exists, where to get it from, how to set it up, why encryption is important, and so on. I can imagine having a hard-fail mode, sending only this message and a soft-fail mode, attaching or including the automatically generated message somehow (attach it, inline it, etc.) to the original message. Either way, the generated message should be cryptographically signed.<br><br>Receiving mail would work the other way around. The proxy would try to fetch messages off all configured IMAP/POP3 servers on its own, check if they are signed. If a signed message arrives the public key should be, if not already done, be imported into the local keyring. As for encrypted messages this should happen the same way, plus decrypting the message.<br>The Email client would connect to the IMAP/POP3 proxy server and fetch (the decrypted) messages from it. Both unencrypted and unsigned messages should be marked somehow (think subject re-writing here and maybe adding an X- header). However, no automatic sending of emails should happen when receiving messages as the From header could be forged (spam anyone?).<br><br><strong>Features of the program</strong><br><br>The program I have in mind should include the following features:<br></p><ul><br><li>GPG key management (creating, distribution to keyservers, etc).</li><br><li>Automatic encryption/decryption and signing/checking signatures.</li><br><li>Non-technical, so everyone can use it.</li><br><li>Support multiple IMAP/POP3 and SMTP servers, so it can act as a central point for storing all Emails a user could receive.</li><br><li>Cross-platform functionality (Java? Python?)</li><br><li>Free Software</li><br></ul><br><strong>Plans</strong><br><br>I would love to implement this program, but fear that this could be way too much work for a single person. If you are interested in helping with the implementation or simply have any comments feel free to either drop me an email at <a href="mailto:blog%20at%20sp%20dot%20or%20dot%20at" title="Send email to author">blog at sp dot or dot at</a> or use the blog's comment function.<br><br>I hope I did explain my idea clear enough and did not miss anything.<br><br>Happy hacking!
+    
+    <ul class="pager"><li class="previous">
+            <a href="200809europarltv-for-everyone-no-only-for.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="200903freedom-blog-reloaded-launch.html">Next post →</a>
+        </li>
+    </ul><div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="speijnikblog";
+            var disqus_url="http://blog.sp.or.at/posts/200810how-email-encryption-for-broader-public.html";
+        var disqus_title="How Email encryption for the broader public could be realized";
+        var disqus_identifier="cache/posts/200810how-email-encryption-for-broader-public.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+
+    </div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+    <!-- Social buttons -->
+    <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+    <a class="addthis_button_more">Share</a>
+    <ul><li><a class="addthis_button_facebook"></a>
+    </li><li><a class="addthis_button_google_plusone_share"></a>
+    </li><li><a class="addthis_button_linkedin"></a>
+    </li><li><a class="addthis_button_twitter"></a>
+    </li></ul></div>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Is trying to fix (E)SMTP really worth it? [part 2 - infrastructure] | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../">
+            Stephan's blog
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+                </li></ul><ul class="nav pull-right"><li>
+    <a href="#" id="sourcelink">Source</a>
+    </li>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>Is trying to fix (E)SMTP really worth it? [part 2 - infrastructure]</h1>
+
+    <hr><small>
+        Posted: <time class="published" datetime="2008-07-03T12:33:00+02:00">2008-07-03 12:33</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
+            <a class="tag" href="../categories/observations.html"><span class="badge badge-info">observations</span></a>
+
+    </small>
+    <hr><p>[digg=http://digg.com/security/Is_trying_to_fix_E_SMTP_really_worth_it_part_2]This article is the second in my series about the flaws of (E)SMTP, the whole Internet mail infrastructure and how it could possibly be fixed. The main focus of this part is a new approach to the infrastructure which should help making emailing more secure, reliable and less spam-prone.<br><br>The first article can be found <a href="http://blog.sp.or.at/2008/03/27/is-trying-to-fix-esmtp-really-worth-it-part-1/" title="Is trying to fix (E)SMTP really worth it? [part 1]">here</a> and points out flaws and problems in the current systems.<br><br><a name="more"></a><br><br>Before going into detail about how the infrastructure could look like I would like to point out the goals of my proposal:<br></p><ul><br><li>security through end-to-end encryption</li><br><li>security through sender and server authentication</li><br><li>integrity of message contents</li><br><li>built-in load-balancing support</li><br><li>getting rid of email forwards</li><br></ul><br>These five major points should be covered directly by a new infrastructure and should be mandatory. There is no point in making any of these optional as the rest of this article should point out.<br><br><strong>security through end-to-end encryption</strong><br><br>Even though both SSL and TLS support exist for (E)SMTP these features are optional. In fact this means that it is possible that even though one submits his or her email over a secure channel the message could be transferred in plain-text somewhere on the way to its destination.<br>This enables an attacker to snoop at your message somewhere along its way. Whilst some people believe this is okay I strongly oppose to anyone being able to read either my private or business emails.<br><br>The solution to this problem is end-to-end encryption. The new infrastructure should make encryption of all message exchanged mandatory and further provide a way of encrypting the message contents. This way only the intended recipient can actually read the message (as in not even a server administrator having direct access to a user's mailbox). End-to-end encryption of the communication channels should be done by using TLS for all communication between all clients and servers and for server-to-server communication.<br><br>Encrypting of the message payload could be done in a similar (if not even the same) way <a href="http://en.wikipedia.org/wiki/OpenPGP#OpenPGP" title="OpenPGP">OpenPGP</a> (RFC 4880) works.<br><br><strong>security through sender and server authentication</strong><br><br>The next feature a possible SMTP successor should provide is sender and server authentication. As TLS should be mandatory for the implementation the easiest way to achieve this is using a <a href="http://en.wikipedia.org/wiki/Public_key_infrastructure" title="Public key infrastructure">public key infrastructure</a>. This could then in turn be used for multiple things, including message integrity checking, encryption of message contents, authentication of the sender and authentication of the server.<br><br>Integrating a public key infrastructure could be done by having special DNS (maybe TXT) records that contain the address of key servers. These key servers would store not only a domain-root certificate which would allow user and server authentication but also all user and server certificates themselves.<br><br>A receiving server could then check the sending domain's key server for both the domain-root certificate and the sending server and thus verify that the message is legitimate and actually originated from the specified domain.<br><br>Sender authentication works together with message integrity. Basically the receiving server opens the message, gets the client's message signature from the message, and asks the sending domain's key server for the public key of the sender. The receiving server then checks the signature and this way verifies the sender.<br><br><strong>integrity of message contents</strong><br><br>Integrity checking is closely related to sender verification. As the receiving server checks the sender's message signature in the sender-verification process the message is automatically checked for integrity too.<br><br><strong>built-in load-balancing support</strong><br><br>Load-balancing is also closely related to the PKI approach. The sending server could use the receiving domain's key server to locate the server to send the message to. This way load-balancing of receiving servers can easily be implemented. Furthermore load-balancing of multiple key servers for a single domain is possible using DNS round-robin records.<br><br><strong>getting rid of email forwards</strong><br><br>Forwards can also be gotten rid of by using the receiving domain's key server similarily to the load-balancing approach. Instead of pointing the sender to a domain-local receiving server the key server could simply point the sender to another domain's receiving server. This way the message would not really be forwarded or relayed anymore but rather a pointer to where the message should be stored could be provided.<br><br><strong>Putting everything together</strong><br><br>Making all the mentioned features mandatory for a possible successor of SMTP should make users benefit in a few ways. Firstly, users could rely on both then integrity of the message, that the sender actually the person he or she pretends to be and the fact that snooping on the contents of the messages they send is hard to impossible.<br>Furthermore this infrastructure should make sending SPAM messages a lot harder as domains for sending spam would have to be bought, DNS servers and key servers would need to be operated and blocking unwanted messages could be as easy as blocking either a domain or a single user using the information provided through their message signature.<br><br>ISPs would benefit from the built-in load-balancing mechanisms and the mailbox alias feature (forwarder). Whilst the load-balancing technique simplifies set-up and operating of a load-balanced infrastructure the mailbox alias feature should help cutting down on traffic generated by email forwarders.<br><br>Please be aware that I intentionally left out all implementation specific details, such as the message exchange protocols. More technical aspects of a possible implementation are to be covered in the next parts of this series. As always, comments are highly appreciated.
+    
+    <ul class="pager"><li class="previous">
+            <a href="200806status-update.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="200808debian-gnulinux-50-on-samsung-p55-pro.html">Next post →</a>
+        </li>
+    </ul><div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="speijnikblog";
+            var disqus_url="http://blog.sp.or.at/posts/200807is-trying-to-fix-esmtp-really-worth-it.html";
+        var disqus_title="Is trying to fix (E)SMTP really worth it? [part 2 - infrastructure]";
+        var disqus_identifier="cache/posts/200807is-trying-to-fix-esmtp-really-worth-it.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+
+    </div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+    <!-- Social buttons -->
+    <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+    <a class="addthis_button_more">Share</a>
+    <ul><li><a class="addthis_button_facebook"></a>
+    </li><li><a class="addthis_button_google_plusone_share"></a>
+    </li><li><a class="addthis_button_linkedin"></a>
+    </li><li><a class="addthis_button_twitter"></a>
+    </li></ul></div>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>

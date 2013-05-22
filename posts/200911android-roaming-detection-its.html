@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Android's roaming detection &amp; its implementation | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../">
+            Stephan's blog
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+                </li></ul><ul class="nav pull-right"><li>
+    <a href="#" id="sourcelink">Source</a>
+    </li>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>Android's roaming detection &amp; its implementation</h1>
+
+    <hr><small>
+        Posted: <time class="published" datetime="2009-11-08T20:04:00+01:00">2009-11-08 20:04</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/foss.html"><span class="badge badge-info">foss</span></a>
+            <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
+            <a class="tag" href="../categories/gsoc.html"><span class="badge badge-info">gsoc</span></a>
+            <a class="tag" href="../categories/debian.html"><span class="badge badge-info">Debian</span></a>
+            <a class="tag" href="../categories/android.html"><span class="badge badge-info">Android</span></a>
+            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+
+    </small>
+    <hr><p>I know I wrote about Android already today, but there is another thing that concerns me right now. I am owner of an Android-based phone (an HTC Dream) and recently switched my mobile network provider. The problem is that my new provider is a <a href="http://en.wikipedia.org/wiki/Mobile_Virtual_Network_Operator">virtual provider</a> and as such there is no real network of that provider. Now Android has a feature to turn off broadband connections when in roaming mode, which itself is a great idea and can save you from paying quite a lot of money when the phone connects to 3G abroad, but this feature also turns off broadband connections when roaming locally. All this is being discussed in bug report <a href="http://code.google.com/p/android/issues/detail?id=3499">#3499</a>.<br><br>After noticing this problem I became curious on how Android detects that it is roaming and I found the GsmServiceStateTracker.isRoamingBetweenOperators method to be responsible for that magic, but soon noticed that the method is not only inefficient, but also doesn't work as intended. This is hardly related to the bug mentioned above, but let's have a look at the code in question:<br></p><pre class="java" name="code">/**<br>* Set roaming state when gsmRoaming is true and, if operator mcc is the<br>* same as sim mcc, ons is different from spn<br>* @param gsmRoaming TS 27.007 7.2 CREG registered roaming<br>* @param s ServiceState hold current ons<br>* @return true for roaming state set<br>*/<br>    private<br>    boolean isRoamingBetweenOperators(boolean gsmRoaming, ServiceState s) {<br>        String spn = SystemProperties.get(PROPERTY_ICC_OPERATOR_ALPHA, "empty");<br><br>        String onsl = s.getOperatorAlphaLong();<br>        String onss = s.getOperatorAlphaShort();<br><br>        boolean equalsOnsl = onsl != null &amp;&amp; spn.equals(onsl);<br>        boolean equalsOnss = onss != null &amp;&amp; spn.equals(onss);<br><br>        String simNumeric = SystemProperties.get(PROPERTY_ICC_OPERATOR_NUMERIC, "");<br>        String operatorNumeric = s.getOperatorNumeric();<br><br>        boolean equalsMcc = true;<br>        try {<br>            equalsMcc = simNumeric.substring(0, 3).<br>                    equals(operatorNumeric.substring(0, 3));<br>        } catch (Exception e){<br>        }<br><br>        return gsmRoaming &amp;&amp; !(equalsMcc &amp;&amp; (equalsOnsl || equalsOnss));<br>    }</pre><br>Okay, let me summarize what this piece of code does wrong, at least from my understanding:<br><ul><br><li>It takes both the network operator alphanumeric identifier and alphanumeric long identifier and compares both to the alphanumeric identifier coming from the SIM card, whilst...</li><br><li>... it could simply use the network and SIM card numeric identifiers and compare those, which should be a lot cheaper than comparing those strings</li><br><li>Then it takes the first three characters/digits of the numeric identifiers (which indicate the country) and compares those</li><br></ul><br>Now in my case my SIM card doesn't seem to provide the phone with a alphanumeric identifier, so the first two comparisons always fail for obvious reasons and, looking at the inline-if in the last line of that method my phone will always indicate that I am in roaming mode, even when I am not.<br><br>The problem is not only the logic which seems to be wrong, but I rather see the inefficient comparisons used there to be a major problem in embedded systems like mobile phones. This is the first piece of Android code I have had a look at, but if all other code is as ugly and inefficient as these few lines Android really needs some major fixes. Related to this I have reported bug <a href="http://code.google.com/p/android/issues/detail?id=4590">#4590</a> and forked the <a href="http://github.com/speijnik/android_frameworks_base">git repository in question</a> over at github, to fix this method, should be a matter of 5 minutes.
+    
+    <ul class="pager"><li class="previous">
+            <a href="200911android-mythbusters-and-openness.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="200911my-android-repositories.html">Next post →</a>
+        </li>
+    </ul><div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="speijnikblog";
+            var disqus_url="http://blog.sp.or.at/posts/200911android-roaming-detection-its.html";
+        var disqus_title="Android's roaming detection & its implementation";
+        var disqus_identifier="cache/posts/200911android-roaming-detection-its.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+
+    </div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+    <!-- Social buttons -->
+    <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+    <a class="addthis_button_more">Share</a>
+    <ul><li><a class="addthis_button_facebook"></a>
+    </li><li><a class="addthis_button_google_plusone_share"></a>
+    </li><li><a class="addthis_button_linkedin"></a>
+    </li><li><a class="addthis_button_twitter"></a>
+    </li></ul></div>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>

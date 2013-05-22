@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Introducing ujail &amp; proof of concept | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../">
+            Stephan's blog
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+                </li></ul><ul class="nav pull-right"><li>
+    <a href="#" id="sourcelink">Source</a>
+    </li>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>Introducing ujail &amp; proof of concept</h1>
+
+    <hr><small>
+        Posted: <time class="published" datetime="2009-12-07T16:49:00+01:00">2009-12-07 16:49</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
+            <a class="tag" href="../categories/ujail.html"><span class="badge badge-info">ujail</span></a>
+            <a class="tag" href="../categories/gnulinux.html"><span class="badge badge-info">GNU/Linux</span></a>
+            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+
+    </small>
+    <hr><p>Lately I have been thinking about methods to provide a stripped down, secured environment for running untrusted code on GNU/Linux. With this post I would like to present you with the first results of my research.<br><br><b>ujail - brief introduction</b><br><br>I have chosen <a href="http://launchpad.net/ujail">ujail</a> as the name for the technique I am proposing. ujail stands for micro jail in userspace and, in itself, describes the concept briefly. The main idea is to have a userspace process monitor system calls of one of its childs and emulate some calls, if needed. This is done using ptrace and namely both PTRACE_SYSEMU and PTRACE_SYSCALL.<br>The ujail process should not be able to monitor syscalls, like strace does, but also intercept and emulate them.<br><br>This sounds a lot like user mode linux (uml), but the method is different. Whilst uml comes with a complete kernel, emulates all system calls and this way provides a virtualized system, ujail is intended to only emulate some systemcalls, without emulating the kernel.<br><br><b>Revisiting PTRACE_SYSCALL &amp; PTRACE_SYSEMU</b><br><br>To better explain how the ujail technique works I would like to have a quick look at PTRACE_SYSCALL and PTRACE_SYSEMU again.<br><br>PTRACE_SYSCALL allows a userspace process to be notified whenever a traced process enters or leaves a system call. This means that two notifications are normally sent: one before system call entry and one afterwards. Even though one is able to change the parameters of system calls this method does not allow system calls to be fully emulated (think virtual filesystem here).<br><br>PTRACE_SYSEMU on the other hand provides one notification on syscall entry and expects the receiver of the notification to emulate the syscall. This method alone sounds great, but this also means that memory allocation needs to be emulated too, which is quite complex in userspace.<br><br><b>A hybrid of PTRACE_SYSCALL &amp; PTRACE_SYSEMU</b><br><br>Now on to the concept behind ujail. The method I am describing works by calling PTRACE_SYSEMU for a specific process and this way taking over emulation of all system calls. However, some system calls are complex to emulate in userspace, and so a hybrid of both PTRACE_SYSEMU and PTRACE_SYSCALL is needed. In short this works by checking whether the syscall needs to be emulated when the PTRACE_SYSEMU event is received.<br>Now one way is emulating the syscall, filling the processes' registers and resuming execution of the process. This is simple and straight-forward.<br><br>The second way is forwarding the system call to the kernel. The problem here is that calling the syscall in the monitoring process will make the new resources available to that very process, and not the process to be jailed. This is where the hybrid method kicks in.<br><br>The proof of concept code creates a backup of the next instruction to be executed along with a copy of the instruction pointer at this point and patches it with the opcodes for "int $0x80", causing the syscall to be made again. After that it resumes execution with PTRACE_SYSCALL and waits again. The first event to be received now is the program leaving the emulated system call, which can be ignored. Resuming yet again will give use two PTRACE_SYSCALL events, one for syscall entry and one for syscall exit.<br><br>The first event is not really interesting, but at the second event the opcode backup is restored and the eip set from the saved value. Now the kernel has handled the syscall and the result is ready for the child process. A final call of PTRACE_SYSEMU resumes execution of the child and waits for the next syscall.<br><br><b>Proof of concept</b><br><br>The proof of concept code can be downloaded from its <a href="https://code.launchpad.net/%7Espeijnik/ujail/proof-of-concept">bazaar branch</a> at launchpad.net. It is intended to be used on i386 systems only and works with simple programs, but is known not to work with anything using fork, vfork and most likely will not work for binaries using threading.<br><br>Finally, I would like to thank <a href="http://www.linuxjournal.com/user/800841" title="View user profile.">Pradeep Padala</a> for his "Playing with ptrace" articles <a href="http://www.linuxjournal.com/article/6100">[0]</a><a href="http://www.linuxjournal.com/article/6210">[1]</a>, which were fun to read and worked as a great introduction of ptrace for me. <br><br>Now there is only one thing left to say: if you are interested in this method, see loopholes or problems or want to contribute, please go ahead and contact me:<br><br>debian at sp dot or dot at</p>
+    
+    <ul class="pager"><li class="previous">
+            <a href="200912how-to-copy-partitions-under-gnulinux.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="200912ujail-use-cases-faqs-part-1-proof-of.html">Next post →</a>
+        </li>
+    </ul><div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="speijnikblog";
+            var disqus_url="http://blog.sp.or.at/posts/200912introducing-ujail-proof-of-concept.html";
+        var disqus_title="Introducing ujail & proof of concept";
+        var disqus_identifier="cache/posts/200912introducing-ujail-proof-of-concept.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+
+    </div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+    <!-- Social buttons -->
+    <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+    <a class="addthis_button_more">Share</a>
+    <ul><li><a class="addthis_button_facebook"></a>
+    </li><li><a class="addthis_button_google_plusone_share"></a>
+    </li><li><a class="addthis_button_linkedin"></a>
+    </li><li><a class="addthis_button_twitter"></a>
+    </li></ul></div>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>

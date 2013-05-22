@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Summer Of Code 2009: Working for Debian | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../">
+            Stephan's blog
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+                </li></ul><ul class="nav pull-right"><li>
+    <a href="#" id="sourcelink">Source</a>
+    </li>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>Summer Of Code 2009: Working for Debian</h1>
+
+    <hr><small>
+        Posted: <time class="published" datetime="2009-04-21T08:10:00+02:00">2009-04-21 08:10</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/foss.html"><span class="badge badge-info">foss</span></a>
+            <a class="tag" href="../categories/gsoc.html"><span class="badge badge-info">gsoc</span></a>
+            <a class="tag" href="../categories/debian.html"><span class="badge badge-info">Debian</span></a>
+
+    </small>
+    <hr><p>Yesterday Google announced the students and projects that have been accepted for Google Summer Of Code 2009 and guess what: <a href="http://wiki.debian.org/SummerOfCode2009/Distribution_independent_update_manager" title="Distribution-independent update-manager @ wiki.debian.org">my project</a> was accepted. This means I will be working full-time on FOSS this summer.<br><br>So I guess it's about time to introduce my project to you: Distribution-independent update manager, mentored by <a href="https://launchpad.net/~mvo" title="mvo @ launchpad.net">Michael Vogt (mvo)</a>.<br><br>Okay, I believe some of you might wonder what this project is all about, as <a href="http://packages.qa.debian.org/u/update-manager.html" title="update-manager @ packages.qa.debian.org">update-manager</a> is in the Debian package archive already. There is a problem with update-manager though. As you see in the package's version number (it contains ".debian") update-manager has been adapted for use in Debian. Also, Debian contains update-manager 0.68 right now, whilst upstream (Ubuntu in this case) has released <a href="http://bazaar.launchpad.net/~ubuntu-core-dev/update-manager/main/revision/1374" title="update-manager revision log @ bazaar.launchpad.net">0.111.6</a> (actually there were quite a few upstream versions meanwhile). The reason Debian is nowhere near being up-to-date with upstream is that right now a lot of effort has to be put into porting update-manager to Debian every time a new upstream release is made, because certain Ubuntu-specific functionality breaks update-manager in more or less severe ways on Debian.<br><br>This leads me directly to what my project is about: making update-manager (Ubuntu-) distribution-independent, but not package manager independent.<br>There are 6 main goals for this project, which I will be working on in the order below.<br></p><ul><br><li>Analyzing the code and identifying Ubuntu-specific parts.</li><br><li>Creating a distribution-plugin interface and moving the Ubuntu-specific parts into a distribution-plugin, creating a core package that is distribution-independent.</li><br><li>Creating a special notification for important/security related updates and providing the code that handles updates from security.debian.org as such.</li><br><li>Creating a backend-plugin interface, moving the synaptics backend into a backend-plugin and optionally create a python-apt based plugin.</li><br><li>UI redesign, providing a simpler interface to average joe, whilst allowing more experienced users to optionally display more information.</li><br><li>Automatic downloading &amp; installation of updates. This is still up to discussion, as automatic downloading is already provided by software-properties (-gtk and -kde) and automatic installation can be handled by unattended-upgrades. Both packages are part of Debian already.</li><br></ul><br>Please note that this list should not be considered final and may be extended or modified over time. It exists to give you an overview of what exactly my project is about and how I am planning on carrying out the tasks.<br><br>Finally I wanted to let you know that I will keep you posted on the progress I am making, via this blog. Alternatively a blog aggregator for Debian's GSoC students has been set up over at <a href="http://soc.alioth.debian.org/feeds/blogs/" title="Debian's GSoC blog aggregator">http://soc.alioth.debian.org/feeds/blogs/</a>, where you can not only find my posts, but those of all of Debian's students.
+    
+    <ul class="pager"><li class="previous">
+            <a href="200904python-everywhere-computer-games.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="200904update-manager-to-become-more-modular.html">Next post →</a>
+        </li>
+    </ul><div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="speijnikblog";
+            var disqus_url="http://blog.sp.or.at/posts/200904summer-of-code-2009-working-for-debian.html";
+        var disqus_title="Summer Of Code 2009: Working for Debian";
+        var disqus_identifier="cache/posts/200904summer-of-code-2009-working-for-debian.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+
+    </div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+    <!-- Social buttons -->
+    <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+    <a class="addthis_button_more">Share</a>
+    <ul><li><a class="addthis_button_facebook"></a>
+    </li><li><a class="addthis_button_google_plusone_share"></a>
+    </li><li><a class="addthis_button_linkedin"></a>
+    </li><li><a class="addthis_button_twitter"></a>
+    </li></ul></div>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>

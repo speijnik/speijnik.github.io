@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>update-manager weekly update #6 | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../">
+            Stephan's blog
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+                </li></ul><ul class="nav pull-right"><li>
+    <a href="#" id="sourcelink">Source</a>
+    </li>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>update-manager weekly update #6</h1>
+
+    <hr><small>
+        Posted: <time class="published" datetime="2009-07-09T19:07:00+02:00">2009-07-09 19:07</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/gsoc.html"><span class="badge badge-info">gsoc</span></a>
+            <a class="tag" href="../categories/python.html"><span class="badge badge-info">python</span></a>
+            <a class="tag" href="../categories/debian.html"><span class="badge badge-info">Debian</span></a>
+            <a class="tag" href="../categories/update-manager.html"><span class="badge badge-info">update-manager</span></a>
+            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+
+    </small>
+    <hr><p>So finally I have the time to provide you with a weekly update, instead of my usual bi-weekly ones.<br><br>Unfortunately I did not work on anything on last week's TODO list, but found other issues I worked on and corrected.  So let's have a look at what I've done.<br><br><strong>Debian packaging update</strong><br><br>I have done some work on the Debian packaging, which allows update-manager to be built using dpkg-buildpackage now. The way packages are splitted is not finalized yet and not up-to-date with my (and my mentor's) idea of how we should do that. You can expect an update to that soonish.<br><br><strong>Automatically invoking package list reloading / update check</strong><br><br>There is a command line switch (namely -c, or --check) now, that automatically performs an update check on startup. This gives other programs, like software-properties, a way of forcing a check when, for example, the package list sources have changed.<br><br><strong>Checking/unchecking all updates in Gtk frontend</strong><br><br>Finally the small feature of selecting or deselecting all updates works in the Gtk frontend. Special cases like "all updates already checked" or "no updates checked" yet are handled too, meaning that you can only use one of these methods if it actually makes sense.<br><br><strong>Package dependencies in python-apt backend and Gtk frontend</strong><br><br>Both the python-apt backend and the Gtk frontend are now aware of package dependencies. This means that when you select an upgrade that depends on another one that other update is selected too. The same works vice-versa too. Additionally the UI now lists all dependencies and dependencies on packages that are not installed yet and automatically deselects all updates that would requires new packages to be installed.<br><br><strong>Displaying of overall download size in Gtk frontend</strong><br><br>There has been a missing feature (ok, maybe a bug) so that the displayed download size would not be updated in the Gtk frontend. This has been fixed.<br><br><strong>Install button being set sensitive correctly in Gtk frontend</strong><br><br>In the past the install button would be set to either sensitive or insensitive at startup and not updated afterwards. That means if there were no packages to update when starting update-manager, then checking for updates where new updates are found, the install button would not be set sensitive again. I fixed that too.<br><br><strong>Sorting of packages in Gtk frontend</strong><br><br>In the Gtk frontend packages were not sorted at all, which meant that finding a specific package was rather hard. I added code that sorts the update list by package name now, which solves this issue.<br><br><strong>Bugfixing humanize_size</strong><br><br>The humanize_size method, which is responsible for human-readable size displaying in the Gtk frontend contained a major bug so that sizes were rounded. Again, I was able to solve this.<br><br><strong>Next week's TODO list</strong><br><br>As I didn't find time to work on last week's TODO list my new TODO list is in fact my old one, with additional "Bugfixing" and "Debian packaging" tasks:<br></p><ul><br><li>Downloading and installing of updates</li><br><li>Bugfixing (?)</li><br><li>Debian packaging</li><br><li>Checking that everything is documented</li><br><li>Even more unit tests</li><br><li>Pylint checking</li><br><li>If time permits and everything else works correctly: working on an aptdaemon backend</li><br></ul><br>The next thing you can expect me to update is the Debian packaging and the documentation, which are my highest priority tasks for now, followed by support for downloading and installing updates.<br><br>Happy hacking!
+    
+    <ul class="pager"><li class="previous">
+            <a href="200907update-manager-weekly-update-5.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="200908automagic-bug-reporting-in-python.html">Next post →</a>
+        </li>
+    </ul><div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="speijnikblog";
+            var disqus_url="http://blog.sp.or.at/posts/200907update-manager-weekly-update-6.html";
+        var disqus_title="update-manager weekly update #6";
+        var disqus_identifier="cache/posts/200907update-manager-weekly-update-6.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+
+    </div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+    <!-- Social buttons -->
+    <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+    <a class="addthis_button_more">Share</a>
+    <ul><li><a class="addthis_button_facebook"></a>
+    </li><li><a class="addthis_button_google_plusone_share"></a>
+    </li><li><a class="addthis_button_linkedin"></a>
+    </li><li><a class="addthis_button_twitter"></a>
+    </li></ul></div>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>

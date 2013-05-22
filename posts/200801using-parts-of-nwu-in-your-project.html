@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Using parts of nwu in your project | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
+<!-- Menubar -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+            <a class="brand" href="../">
+            Stephan's blog
+            </a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav"><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+                </li></ul><ul class="nav pull-right"><li>
+    <a href="#" id="sourcelink">Source</a>
+    </li>
+
+                </ul></div>
+        </div>
+    </div>
+</div>
+<!-- End of Menubar -->
+<div class="container-fluid" id="container-fluid">
+    <!--Body content-->
+    <div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+    
+    <div class="postbox">
+    
+    <h1>Using parts of nwu in your project</h1>
+
+    <hr><small>
+        Posted: <time class="published" datetime="2008-01-13T17:43:00+01:00">2008-01-13 17:43</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/nwu.html"><span class="badge badge-info">nwu</span></a>
+            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+
+    </small>
+    <hr><p>As I promised I am writing about <a href="http://cetico.org/nwu" title="network wide updates">nwu</a> again. But instead of reporting on recent development efforts I would rather like to point something else out today: The <a href="http://cetico.org/nwu/browser/branches/stephan/nwu/common" title="nwu.common module">nwu.common</a> Python module contains code which can be used stand-alone in your applications. Some of the functions the module provides could come in handy, so I thought it was a good idea to let you know.<br><br>This article is going to explain the stand-alone nwu.common.* modules and their function.<br><br><a name="more"></a><strong> nwu.common.SecureXMLRPC</strong><br><br>I would like to start out introducing my "baby": SecureXMLRPC. As the name suggests it provides support for XML-RPC over https. You might think "but that's present in Python's SimpleXMLRPCServer and xmlrpclib already" and you are right about that. However, the Python implementation uses <a href="http://openssl.org/" title="OpenSSL homepage">OpenSSL</a>, whilst SecureXMLRPC provides both a server and client implementation using <a href="http://www.gnu.org/software/gnutls/" title="GnuTLS homepage">GnuTLS</a>. Even though the OpenSSL version works perfectly fine you cannot link it to GPL-licensed code due to the OpenSSL license being <a href="http://gnu.org/licenses/license-list.html" title="license list">incompatible to the GPL</a>.<br>Furthermore SecureXMLRPC supports compression of the XML-RPC payload and as of today is aware of multi-threading.<br><br><strong>nwu.common.config</strong><br><br>The config module provides a single class, "Config". It basically is a slightly improved version of Python's SafeConfigParser class and allows passing a "default value" argument to its get() method which is returned in case the setting is not present in the config.<br><br><strong>nwu.common.app</strong><br><br>This is a simple application framework. It makes use of "nwu.common.config" for reading the config file. However, its main feature is a simple-to-use command-line parser, which parses not only arguments from the command-line (such as --do-something, -d or --configfile=filename), but also supports "commands" as they can be found in several applications, such as aptitude. This way it is easy to not only create top-level commands (like "aptitude <em>search</em> &lt;package name&gt;"), but also nested command structures (like "program <em>computer get</em> &lt;computer name&gt;", "program <em>computer list</em>", etc.).<br><br><strong>nwu.common.certtool</strong><br><br>The certtool module is a wrapper around GnuTLS' certtool application. It allows you to create private keys, certificate authorities, sign certificates, created certificate-signing-requests (CSRs)  and sign such.<br>However, please note that it currently does not implement the full functionality certtool provides but rather only the pieces nwu needs.<br><br><strong>nwu.common.aptmethod</strong><br><br>nwu.common.aptmethod simplifies implementation of an APT transport/method in Python. It takes care of all communication done with apt itself and thus gives you the opportunity to implement a new method in a simple way.<br><br><strong>nwu.common.apt</strong><br><br>Finally there is also the apt module. This module currently contains code to parse APT Packages files.<br><br><strong>nwu.common.scheduler</strong><br><br>One of the latest additions to the common module. It provides a way of scheduling tasks for execution at a certain date/time and executing a task in a given interval.</p>
+    
+    <ul class="pager"><li class="previous">
+            <a href="200801blue-gnu-news-for-gnus.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="200801nwu-development-news-0.html">Next post →</a>
+        </li>
+    </ul><div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="speijnikblog";
+            var disqus_url="http://blog.sp.or.at/posts/200801using-parts-of-nwu-in-your-project.html";
+        var disqus_title="Using parts of nwu in your project";
+        var disqus_identifier="cache/posts/200801using-parts-of-nwu-in-your-project.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+
+    </div>
+
+    </div>
+    </div>
+    <!--End of body content-->
+</div>
+<div class="footerbox">
+    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+</div>
+
+    <!-- Social buttons -->
+    <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+    <a class="addthis_button_more">Share</a>
+    <ul><li><a class="addthis_button_facebook"></a>
+    </li><li><a class="addthis_button_google_plusone_share"></a>
+    </li><li><a class="addthis_button_linkedin"></a>
+    </li><li><a class="addthis_button_twitter"></a>
+    </li></ul></div>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>
