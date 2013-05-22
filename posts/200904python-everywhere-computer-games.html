@@ -1,58 +1,29 @@
-<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Python everywhere: computer games | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Python everywhere: computer games | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
-<!-- Menubar -->
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-
-            <a class="brand" href="../">
-            Stephan's blog
-            </a>
-            <!-- Everything you want hidden at 940px or less, place within here -->
-            <div class="nav-collapse collapse">
-                <ul class="nav"><li><a href="../archive.html">Archives</a>
-            </li><li><a href="../categories/index.html">Tags</a>
-            </li><li><a href="../rss.xml">RSS</a>
-
-                </li></ul><ul class="nav pull-right"><li>
-    <a href="#" id="sourcelink">Source</a>
-    </li>
-
-                </ul></div>
-        </div>
-    </div>
-</div>
-<!-- End of Menubar -->
-<div class="container-fluid" id="container-fluid">
-    <!--Body content-->
-    <div class="row-fluid">
-    <div class="span2"></div>
-    <div class="span8">
-    
-    <div class="postbox">
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../rss.xml"></head><body class="home blog">
+    <script type="text/javascript">var addthis_config={"ui_language":"en"};</script><div id="wrap" style="width:850px">
+        <div id="container" style="width:560px">
+            
+    <div class="post">
     
     <h1>Python everywhere: computer games</h1>
 
-    <hr><small>
-        Posted: <time class="published" datetime="2009-04-02T18:35:00+02:00">2009-04-02 18:35</time>
-        
+        <div class="meta" style="background-color: rgb(234, 234, 234); ">                    
+        <span class="authordate">
+            Posted: 2009-04-02 18:35 
+               [<a href="//posts/200904python-everywhere-computer-games.html" id="sourcelink">Source</a>]
+        </span>
+        <br><span class="tags">Tags: 
+                    <a class="tag" href="../categories/foss.html"><span class="badge badge-info">foss</span></a>
+                    <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
+                    <a class="tag" href="../categories/everywhere.html"><span class="badge badge-info">everywhere</span></a>
+                </span>
+                <br><span class="authordate">
+            
 
-        
-          |  More posts about
-            <a class="tag" href="../categories/foss.html"><span class="badge badge-info">foss</span></a>
-            <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
-            <a class="tag" href="../categories/everywhere.html"><span class="badge badge-info">everywhere</span></a>
-
-    </small>
-    <hr><p>This is the second article in my series Python everywhere and covers the use of Python for in computer games. The first article of this series covered the use of Python for the conficker worm scanner tool and can be found <a href="http://blog.peijnik.at/2009/03/31/python-everywhere-conficker-scanner/" title="Python everywhere: conficker scanner">here</a>.<br><a name="more"></a><strong>Games written in Python</strong><br><br>As <a href="http://www.pygame.org/" title="pygame.org">PyGame</a> provides a nice library for writing games purely in Python it is becoming more common to use Python for this task too. The book "<a href="http://www.apress.com/book/view/9781590598726" title="Beginning Game Development with Python and Pygame  @ apress.com">Beginning Game Development with Python and Pygame</a>" is linked directly from the PyGame homepage, and thus is probably a good resource if you want to start writing games in Python.<br><br>However, I do not want to go into detail on how this library works, but rather provide you with a few examples of games written in Python. To provide you with a few examples I had a look at the <a href="http://www.pyweek.org/" title="pyweek.org">PyWeek</a> homepage. PyWeek is a Python Game Programming Challenge which invites everyone to participate, so the winners of this contest are of high-quality, and I'm showing you the latest two winners.<br><br>There are always two winners of PyWeek in for indivduals who have created games and teams. The latest winners are "<a href="http://www.pyweek.org/e/Rambo/" title="Team Rambo @ pyweek.org">Team Rambo</a>" in the individual effort category and "<a href="http://www.pyweek.org/e/midnightsun/" title="Midnight Sun @ pyweek.org">Midnight Sun</a>" with their two-man team.<br><br><strong>PyWeek: Team Rambo's Stringrolled (individual)</strong><br></p><p style="text-align: left;">Stringrolled makes use of the pygame library I mentioned earlier and is a <a href="http://en.wikipedia.org/wiki/Platform_game" title="Platform game @ en.wikipedia.org">platform game</a>. In a mere 2377 lines of code, including comments and blank lines, Team Rambo created an impressive game, coming with a story, easy-to-learn controls and nice 2D-graphics, screenshot below. <a href="http://media.pyweek.org/dl/7/Rambo/pyweek3.png"><img alt="Stringrolled screenshot @ media.pyweek.org" class="aligncenter" height="240" src="http://media.pyweek.org/dl/7/Rambo/pyweek3.png" title="Screenshot of Stringrolled" width="384"></a></p><br><p style="text-align: left;"><strong>PyWeek: Midnight Sun's Kite Story</strong></p><br><p style="text-align: left;">Kite Story is yet another interesting game, with game mechanics I have not seen ever before. You are controlling a kite with your mouse and are trying to catch objects, such as bees and birds, with the kite's rope. So what you basically do you draw a loop around an object with<a href="http://media.pyweek.org/dl/7/midnightsun/ss2.png"><img alt="Kite Story screenshot @ media.pyweek.org" class="alignleft" height="359" src="http://media.pyweek.org/dl/7/midnightsun/ss2.png" title="Kite Story: catching a sky diver" width="357"></a> your mouse and that way catch it. Every third cought object you advance to the next level, but keep in mind not to collide with the objects, because you will lose them and in turn be doing the previous level again, screenshot below. It should be noted that this game does not make use of PyGame at all, but rather relies on <a href="http://pyglet.org/" title="pyglet.org">pyglet</a>, and is 1997 lines of code in length, again counting blank lines and comments too.</p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"><strong>Games using Python</strong></p><br><br><p style="text-align: left;">You have seen now that it is possible to write a game completely in Python, but there's another use-case of Python in games: scripting.<br>Some (proprietary) games, such as <a href="http://www.2kgames.com/civ4/blog_03.htm" title="Modding Sid Meier's Civilization IV @ 2kgames.com">Civilization IV</a>, offer Python support in their editors and SDKs. This quote from the article at 2kgames.com should give you a good idea of what can be done using Python in Civilization IV:<br></p><blockquote><br><p style="text-align: left;">The next level offers <strong>Python and XML</strong> support, letting modders with more experience manipulate the game world and everything in it. XML (eXtensible Markup Language) files can be edited in standard text editors or in special XML file editors that have ease-of-use features like a grid view. Editing these files will allow players to tweak simple game rules and change or add content. For instance, they can add new unit or building types, change the cost of wonders, or add new civilizations. Players can also change the sounds played at certain times or edit the play list for your soundtrack. NOTE: You can have custom soundtracks simply by adding music to the custom folder. You only need to edit the XML in order to assign certain pieces to specific eras or remove certain pieces.</p><br></blockquote><br><blockquote>The Python scripting language is fully integrated throughout the game and offers experienced modders a chance to really strut their stuff! People with some programming skills will be able to do things to alter the game in interesting and extraordinary ways. For instance, all of the game interface screens are exposed to Python, so modders will be able to change the information that's displayed, as well as how it's positioned on the screen. We also use Python to create and generate all of the random map scripts that are included in the game. So, players will now have the ability to add scripted events to the game like automatically generating units when a tile is reached, having specific situations trigger automatic war, or get this, bringing back Civil Wars caused by unrest, Civ II style!</blockquote><br><a href="http://www.eveonline.com/" title="EVE Online Homepage">EVE Online</a> is another game making use of Python, as an <a href="http://www.eveonline.com/devblog.asp?a=blog&amp;bid=488" title="stackless python 2.5 @ eveonline.com">article</a> over at eveonline.com points out.<br><br><strong>Python everywhere - also in compuater games</strong><br><br>Even though I am sure you can come up with a lot more examples of Python being used in computer games I think I have proven my point. Python is being used not only to create computer games, but sometimes also to provide developers with a way of extending games. To me personally it feels as if adoption of Python for this very task is increasing too, and I expect Python to be used even more by the game development community in the future.<br><br>You can expect the third part of this series to be released in about a week, so please check back regularly if you like the series.
+        </span>
+        </div>
+    <p>This is the second article in my series Python everywhere and covers the use of Python for in computer games. The first article of this series covered the use of Python for the conficker worm scanner tool and can be found <a href="http://blog.peijnik.at/2009/03/31/python-everywhere-conficker-scanner/" title="Python everywhere: conficker scanner">here</a>.<br><a name="more"></a><strong>Games written in Python</strong><br><br>As <a href="http://www.pygame.org/" title="pygame.org">PyGame</a> provides a nice library for writing games purely in Python it is becoming more common to use Python for this task too. The book "<a href="http://www.apress.com/book/view/9781590598726" title="Beginning Game Development with Python and Pygame  @ apress.com">Beginning Game Development with Python and Pygame</a>" is linked directly from the PyGame homepage, and thus is probably a good resource if you want to start writing games in Python.<br><br>However, I do not want to go into detail on how this library works, but rather provide you with a few examples of games written in Python. To provide you with a few examples I had a look at the <a href="http://www.pyweek.org/" title="pyweek.org">PyWeek</a> homepage. PyWeek is a Python Game Programming Challenge which invites everyone to participate, so the winners of this contest are of high-quality, and I'm showing you the latest two winners.<br><br>There are always two winners of PyWeek in for indivduals who have created games and teams. The latest winners are "<a href="http://www.pyweek.org/e/Rambo/" title="Team Rambo @ pyweek.org">Team Rambo</a>" in the individual effort category and "<a href="http://www.pyweek.org/e/midnightsun/" title="Midnight Sun @ pyweek.org">Midnight Sun</a>" with their two-man team.<br><br><strong>PyWeek: Team Rambo's Stringrolled (individual)</strong><br></p><p style="text-align: left;">Stringrolled makes use of the pygame library I mentioned earlier and is a <a href="http://en.wikipedia.org/wiki/Platform_game" title="Platform game @ en.wikipedia.org">platform game</a>. In a mere 2377 lines of code, including comments and blank lines, Team Rambo created an impressive game, coming with a story, easy-to-learn controls and nice 2D-graphics, screenshot below. <a href="http://media.pyweek.org/dl/7/Rambo/pyweek3.png"><img alt="Stringrolled screenshot @ media.pyweek.org" class="aligncenter" height="240" src="http://media.pyweek.org/dl/7/Rambo/pyweek3.png" title="Screenshot of Stringrolled" width="384"></a></p><br><p style="text-align: left;"><strong>PyWeek: Midnight Sun's Kite Story</strong></p><br><p style="text-align: left;">Kite Story is yet another interesting game, with game mechanics I have not seen ever before. You are controlling a kite with your mouse and are trying to catch objects, such as bees and birds, with the kite's rope. So what you basically do you draw a loop around an object with<a href="http://media.pyweek.org/dl/7/midnightsun/ss2.png"><img alt="Kite Story screenshot @ media.pyweek.org" class="alignleft" height="359" src="http://media.pyweek.org/dl/7/midnightsun/ss2.png" title="Kite Story: catching a sky diver" width="357"></a> your mouse and that way catch it. Every third cought object you advance to the next level, but keep in mind not to collide with the objects, because you will lose them and in turn be doing the previous level again, screenshot below. It should be noted that this game does not make use of PyGame at all, but rather relies on <a href="http://pyglet.org/" title="pyglet.org">pyglet</a>, and is 1997 lines of code in length, again counting blank lines and comments too.</p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"></p><br><p style="text-align: left;"><strong>Games using Python</strong></p><br><br><p style="text-align: left;">You have seen now that it is possible to write a game completely in Python, but there's another use-case of Python in games: scripting.<br>Some (proprietary) games, such as <a href="http://www.2kgames.com/civ4/blog_03.htm" title="Modding Sid Meier's Civilization IV @ 2kgames.com">Civilization IV</a>, offer Python support in their editors and SDKs. This quote from the article at 2kgames.com should give you a good idea of what can be done using Python in Civilization IV:<br></p><blockquote><br><p style="text-align: left;">The next level offers <strong>Python and XML</strong> support, letting modders with more experience manipulate the game world and everything in it. XML (eXtensible Markup Language) files can be edited in standard text editors or in special XML file editors that have ease-of-use features like a grid view. Editing these files will allow players to tweak simple game rules and change or add content. For instance, they can add new unit or building types, change the cost of wonders, or add new civilizations. Players can also change the sounds played at certain times or edit the play list for your soundtrack. NOTE: You can have custom soundtracks simply by adding music to the custom folder. You only need to edit the XML in order to assign certain pieces to specific eras or remove certain pieces.</p><br></blockquote><br><blockquote>The Python scripting language is fully integrated throughout the game and offers experienced modders a chance to really strut their stuff! People with some programming skills will be able to do things to alter the game in interesting and extraordinary ways. For instance, all of the game interface screens are exposed to Python, so modders will be able to change the information that's displayed, as well as how it's positioned on the screen. We also use Python to create and generate all of the random map scripts that are included in the game. So, players will now have the ability to add scripted events to the game like automatically generating units when a tile is reached, having specific situations trigger automatic war, or get this, bringing back Civil Wars caused by unrest, Civ II style!</blockquote><br><a href="http://www.eveonline.com/" title="EVE Online Homepage">EVE Online</a> is another game making use of Python, as an <a href="http://www.eveonline.com/devblog.asp?a=blog&amp;bid=488" title="stackless python 2.5 @ eveonline.com">article</a> over at eveonline.com points out.<br><br><strong>Python everywhere - also in compuater games</strong><br><br>Even though I am sure you can come up with a lot more examples of Python being used in computer games I think I have proven my point. Python is being used not only to create computer games, but sometimes also to provide developers with a way of extending games. To me personally it feels as if adoption of Python for this very task is increasing too, and I expect Python to be used even more by the game development community in the future.<br><br>You can expect the third part of this series to be released in about a week, so please check back regularly if you like the series.
     
     <ul class="pager"><li class="previous">
             <a href="200904problems-running-php-as-separate.html">← Previous post</a>
@@ -76,18 +47,18 @@
         })();
     </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-    
-
     </div>
 
-    </div>
-    </div>
-    <!--End of body content-->
-</div>
-<div class="footerbox">
-    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
-</div>
-
+        </div>
+        <div id="sidebar">
+            <!--Sidebar content-->
+            <h1 id="blog-title">
+                <a href="../" title="Stephan's blog">Stephan's blog</a>
+            </h1>
+            
+            
+            <ul class="unstyled"><li>
+            
     <!-- Social buttons -->
     <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
     <a class="addthis_button_more">Share</a>
@@ -96,4 +67,15 @@
     </li><li><a class="addthis_button_linkedin"></a>
     </li><li><a class="addthis_button_twitter"></a>
     </li></ul></div>
-    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --></li><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+            </li><li>
+            </li></ul></div>
+        <div id="footer">
+            Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+        </div>
+    </div>
+    
+</body></html>

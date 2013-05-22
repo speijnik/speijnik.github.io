@@ -1,59 +1,30 @@
-<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Introducing pyttpd | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Introducing pyttpd | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
-<!-- Menubar -->
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-
-            <a class="brand" href="../">
-            Stephan's blog
-            </a>
-            <!-- Everything you want hidden at 940px or less, place within here -->
-            <div class="nav-collapse collapse">
-                <ul class="nav"><li><a href="../archive.html">Archives</a>
-            </li><li><a href="../categories/index.html">Tags</a>
-            </li><li><a href="../rss.xml">RSS</a>
-
-                </li></ul><ul class="nav pull-right"><li>
-    <a href="#" id="sourcelink">Source</a>
-    </li>
-
-                </ul></div>
-        </div>
-    </div>
-</div>
-<!-- End of Menubar -->
-<div class="container-fluid" id="container-fluid">
-    <!--Body content-->
-    <div class="row-fluid">
-    <div class="span2"></div>
-    <div class="span8">
-    
-    <div class="postbox">
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../rss.xml"></head><body class="home blog">
+    <script type="text/javascript">var addthis_config={"ui_language":"en"};</script><div id="wrap" style="width:850px">
+        <div id="container" style="width:560px">
+            
+    <div class="post">
     
     <h1>Introducing pyttpd</h1>
 
-    <hr><small>
-        Posted: <time class="published" datetime="2009-03-31T01:27:00+02:00">2009-03-31 01:27</time>
-        
+        <div class="meta" style="background-color: rgb(234, 234, 234); ">                    
+        <span class="authordate">
+            Posted: 2009-03-31 01:27 
+               [<a href="//posts/200903introducing-pyttpd.html" id="sourcelink">Source</a>]
+        </span>
+        <br><span class="tags">Tags: 
+                    <a class="tag" href="../categories/foss.html"><span class="badge badge-info">foss</span></a>
+                    <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
+                    <a class="tag" href="../categories/pyttpd.html"><span class="badge badge-info">pyttpd</span></a>
+                    <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+                </span>
+                <br><span class="authordate">
+            
 
-        
-          |  More posts about
-            <a class="tag" href="../categories/foss.html"><span class="badge badge-info">foss</span></a>
-            <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
-            <a class="tag" href="../categories/pyttpd.html"><span class="badge badge-info">pyttpd</span></a>
-            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
-
-    </small>
-    <hr><p>In this article I would like to inform you about my newest pet-project: <a href="http://code.sp-its.at/projects/pyttpd" title="pyttpd project @ code.sp-its.at">pyttpd</a>.<br><br>pyttpd is my effort of implementing a webserver in Python, with a focus on security (through privilege separation), extensibility and scalability.<br><br>I started this project because I was not entirely happy with the lack of flexibility and support for privilege separation by popular webservers. Whilst both <a href="http://lighttpd.net" title="lighttpd.net">lighttpd</a> and <a href="http://httpd.apache.org" title="httpd.apache.org">Apache httpd</a> provide means of running processes under different users these usually require hacks like <a href="http://httpd.apache.org/docs/2.0/suexec.html" title="suexec (apache 2.0 documentation)">suexec</a>. Additionally I am somehow curious about how a fully-fledged webserver implemented in Python would perform compared to the mentioned daemons.<br><br><a name="more"></a><br><br><strong>Security through extensive use of Privilege Separation</strong><br><br>Whilst it is common for daemons to initially run as a privileged user and drop privileges as soon as possible it is possible to make more extensive use of setuid and friends.<br>pyttpd's design aims at creating one <a href="http://code.sp-its.at/doc/pyttpd/tip/concepts/process_layout.html#privileged-master-process-pmaster" title="pmaster (pyttpd documentation)">privileged process</a>, which only binds to privileged ports and spawns subprocesses.<br>All subprocesses have specific tasks, such as routing <a href="http://code.sp-its.at/doc/pyttpd/tip/concepts/process_layout.html#unprivileged-master-process-umaster" title="umaster (pyttpd documentation)">between all processes</a>, <a href="http://code.sp-its.at/doc/pyttpd/tip/concepts/process_layout.html#id1" title="listener process (pyttpd documentation)">protocol-specific parsing</a> of incoming requests and handling <a href="http://code.sp-its.at/doc/pyttpd/tip/concepts/process_layout.html#id2" title="vhost process (pyttpd documentation)">processing</a> of those requests.<br>The point is that all these processes do not run as "<em>www-data</em>" or another common account, but that a logic separation takes place on a per-host basis. This means that if the webserver is hosting <em>www.example.org</em> and <em>webapp.example.org</em> those will be running under different system accounts, making it hard to interfere with each other. This method should also enable the use of <a href="http://en.wikipedia.org/wiki/Mandatory_access_control" title="Mandatory Access Control @ en.wikipedia.org">MAC</a> mechanisms such as <a href="http://en.wikipedia.org/wiki/SELinux" title="SELinux @ en.wikipedia.org">SELinux</a> or <a href="http://en.wikipedia.org/wiki/Simplified_Mandatory_Access_Control_Kernel" title="SMACK @ en.wikipedia.org">SMACK</a> more efficiently.<br><br>The design choice of having separate processes for each vhost comes with another benefit: users (or customers) "owning" a vhost could potentionally be allowed to modify parts of the vhost's configuration (excluding UID, GID, and other security-relevant options) on their own.<br><br><strong>Early status</strong><br><br>Right now pyttpd is in a very early planning stage, with no code to show yet. I am still in the middle of the process of writing down all ideas that come to my mind, weeding some out and documenting the others.<br>So what do I have to show you then? Well, the the concept section of the <a href="http://code.sp-its.at/doc/pyttpd/tip/concepts" title="Concepts (pyttpd documentation)">documentation</a> is online now and I am planning on extending it in the next few days and eventually start writing code rather sooner than later.<br><br><strong>Your ideas...</strong><br><br>...and opinions are what I am really interested in. If you are interested in this project I would love if you got involved in some way. Feel free to create tickets at pyttpd's <a href="http://code.sp-its.at/projects/pyttpd" title="pyttpd project @ code.sp-its.at">project page</a> if you have an idea you feel is worth adding or if one of my ideas is flawed, create a comment here or send me an <a href="mailto:stephan%20at%20peijnik%20dot%20at" title="send email to stephan at peijnik dot at">email</a>.</p>
+        </span>
+        </div>
+    <p>In this article I would like to inform you about my newest pet-project: <a href="http://code.sp-its.at/projects/pyttpd" title="pyttpd project @ code.sp-its.at">pyttpd</a>.<br><br>pyttpd is my effort of implementing a webserver in Python, with a focus on security (through privilege separation), extensibility and scalability.<br><br>I started this project because I was not entirely happy with the lack of flexibility and support for privilege separation by popular webservers. Whilst both <a href="http://lighttpd.net" title="lighttpd.net">lighttpd</a> and <a href="http://httpd.apache.org" title="httpd.apache.org">Apache httpd</a> provide means of running processes under different users these usually require hacks like <a href="http://httpd.apache.org/docs/2.0/suexec.html" title="suexec (apache 2.0 documentation)">suexec</a>. Additionally I am somehow curious about how a fully-fledged webserver implemented in Python would perform compared to the mentioned daemons.<br><br><a name="more"></a><br><br><strong>Security through extensive use of Privilege Separation</strong><br><br>Whilst it is common for daemons to initially run as a privileged user and drop privileges as soon as possible it is possible to make more extensive use of setuid and friends.<br>pyttpd's design aims at creating one <a href="http://code.sp-its.at/doc/pyttpd/tip/concepts/process_layout.html#privileged-master-process-pmaster" title="pmaster (pyttpd documentation)">privileged process</a>, which only binds to privileged ports and spawns subprocesses.<br>All subprocesses have specific tasks, such as routing <a href="http://code.sp-its.at/doc/pyttpd/tip/concepts/process_layout.html#unprivileged-master-process-umaster" title="umaster (pyttpd documentation)">between all processes</a>, <a href="http://code.sp-its.at/doc/pyttpd/tip/concepts/process_layout.html#id1" title="listener process (pyttpd documentation)">protocol-specific parsing</a> of incoming requests and handling <a href="http://code.sp-its.at/doc/pyttpd/tip/concepts/process_layout.html#id2" title="vhost process (pyttpd documentation)">processing</a> of those requests.<br>The point is that all these processes do not run as "<em>www-data</em>" or another common account, but that a logic separation takes place on a per-host basis. This means that if the webserver is hosting <em>www.example.org</em> and <em>webapp.example.org</em> those will be running under different system accounts, making it hard to interfere with each other. This method should also enable the use of <a href="http://en.wikipedia.org/wiki/Mandatory_access_control" title="Mandatory Access Control @ en.wikipedia.org">MAC</a> mechanisms such as <a href="http://en.wikipedia.org/wiki/SELinux" title="SELinux @ en.wikipedia.org">SELinux</a> or <a href="http://en.wikipedia.org/wiki/Simplified_Mandatory_Access_Control_Kernel" title="SMACK @ en.wikipedia.org">SMACK</a> more efficiently.<br><br>The design choice of having separate processes for each vhost comes with another benefit: users (or customers) "owning" a vhost could potentionally be allowed to modify parts of the vhost's configuration (excluding UID, GID, and other security-relevant options) on their own.<br><br><strong>Early status</strong><br><br>Right now pyttpd is in a very early planning stage, with no code to show yet. I am still in the middle of the process of writing down all ideas that come to my mind, weeding some out and documenting the others.<br>So what do I have to show you then? Well, the the concept section of the <a href="http://code.sp-its.at/doc/pyttpd/tip/concepts" title="Concepts (pyttpd documentation)">documentation</a> is online now and I am planning on extending it in the next few days and eventually start writing code rather sooner than later.<br><br><strong>Your ideas...</strong><br><br>...and opinions are what I am really interested in. If you are interested in this project I would love if you got involved in some way. Feel free to create tickets at pyttpd's <a href="http://code.sp-its.at/projects/pyttpd" title="pyttpd project @ code.sp-its.at">project page</a> if you have an idea you feel is worth adding or if one of my ideas is flawed, create a comment here or send me an <a href="mailto:stephan%20at%20peijnik%20dot%20at" title="send email to stephan at peijnik dot at">email</a>.</p>
     
     <ul class="pager"><li class="previous">
             <a href="200903update-adsense-on-freedom-blog-reloaded.html">← Previous post</a>
@@ -77,18 +48,18 @@
         })();
     </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-    
-
     </div>
 
-    </div>
-    </div>
-    <!--End of body content-->
-</div>
-<div class="footerbox">
-    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
-</div>
-
+        </div>
+        <div id="sidebar">
+            <!--Sidebar content-->
+            <h1 id="blog-title">
+                <a href="../" title="Stephan's blog">Stephan's blog</a>
+            </h1>
+            
+            
+            <ul class="unstyled"><li>
+            
     <!-- Social buttons -->
     <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
     <a class="addthis_button_more">Share</a>
@@ -97,4 +68,15 @@
     </li><li><a class="addthis_button_linkedin"></a>
     </li><li><a class="addthis_button_twitter"></a>
     </li></ul></div>
-    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --></li><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+            </li><li>
+            </li></ul></div>
+        <div id="footer">
+            Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+        </div>
+    </div>
+    
+</body></html>

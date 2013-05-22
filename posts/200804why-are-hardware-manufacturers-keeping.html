@@ -1,59 +1,30 @@
-<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Why are hardware manufacturers keeping specs to themselves? | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Why are hardware manufacturers keeping specs to themselves? | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
-<!-- Menubar -->
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-
-            <a class="brand" href="../">
-            Stephan's blog
-            </a>
-            <!-- Everything you want hidden at 940px or less, place within here -->
-            <div class="nav-collapse collapse">
-                <ul class="nav"><li><a href="../archive.html">Archives</a>
-            </li><li><a href="../categories/index.html">Tags</a>
-            </li><li><a href="../rss.xml">RSS</a>
-
-                </li></ul><ul class="nav pull-right"><li>
-    <a href="#" id="sourcelink">Source</a>
-    </li>
-
-                </ul></div>
-        </div>
-    </div>
-</div>
-<!-- End of Menubar -->
-<div class="container-fluid" id="container-fluid">
-    <!--Body content-->
-    <div class="row-fluid">
-    <div class="span2"></div>
-    <div class="span8">
-    
-    <div class="postbox">
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../rss.xml"></head><body class="home blog">
+    <script type="text/javascript">var addthis_config={"ui_language":"en"};</script><div id="wrap" style="width:850px">
+        <div id="container" style="width:560px">
+            
+    <div class="post">
     
     <h1>Why are hardware manufacturers keeping specs to themselves?</h1>
 
-    <hr><small>
-        Posted: <time class="published" datetime="2008-04-06T15:13:00+02:00">2008-04-06 15:13</time>
-        
+        <div class="meta" style="background-color: rgb(234, 234, 234); ">                    
+        <span class="authordate">
+            Posted: 2008-04-06 15:13 
+               [<a href="//posts/200804why-are-hardware-manufacturers-keeping.html" id="sourcelink">Source</a>]
+        </span>
+        <br><span class="tags">Tags: 
+                    <a class="tag" href="../categories/foss.html"><span class="badge badge-info">foss</span></a>
+                    <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
+                    <a class="tag" href="../categories/observations.html"><span class="badge badge-info">observations</span></a>
+                    <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+                </span>
+                <br><span class="authordate">
+            
 
-        
-          |  More posts about
-            <a class="tag" href="../categories/foss.html"><span class="badge badge-info">foss</span></a>
-            <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
-            <a class="tag" href="../categories/observations.html"><span class="badge badge-info">observations</span></a>
-            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
-
-    </small>
-    <hr><p>This is one question I have been interested in ever since I started using GNU/Linux.<br><br>Just think about it for a moment. About 20 years ago you got specifications for pretty much every piece of hardware you bought. You were given exact instructions on how to use the hardware you just bought, not only how to install it. Things have changed since then.<br><br>If you buy any piece of hardware today you actually have to expect not to get any documentation on how to "talk" to your new toy. You are only given a CD (sometimes even only a link to a homepage) containing drivers for a few specific operating systems, usually only Microsoft Windows.<br><br>Now I am no driver hacker and so I probably wouldn't be able to implement a driver for anything on my own anyways, but the Free Software community would largely benefit from hardware documentation, as there are a lot of capable driver hackers out there.<br><br>This is not a problem that only affects the Free Software community though. There are a lot of pieces of hardware which do not work on recent proprietary operating systems anymore due to lack of support by its manufacturers.<br>At least this problem would not exist for Free Software operating systems, such as GNU/Linux, if hardware makers would publish documentation of their hardware. The people still using devices which are well beyond their end-of-life could implement drivers on their own, not being dependent on anyone.<br><br>What I am really wondering about in this case is why hardware companies are unable to coin standards for accessing devices of the same class. It works perfectly well for USB (take USB mass storage devices as an example) and I do not understand why there can't be standardized interfaces to other hardware, such as network adapters, as well. On a very-low level these standardized interfaces do work. Just think of PCI, PCI Express or AGP.<br><br>Actually, if you think about this for a few more seconds you should realize one thing: Having standardized interfaces for devices of the same class would cut a lot of costs for hardware makers. Why? Oh well, if they design a brand new networking chip and still implement the given standard there would be no need of writing a new driver. Wait, there would be no need for per-device drivers at all. Implementing a common driver that accesses the standardized interface would be enough, for a whole range of devices.<br><br>So what am I asking of hardware makers? I would love to see companies creating devices of the same class to get together, create standardized interfaces, publish them and implement them in their new devices.<br>I know, this is not likely to happen anytime soon, so a more realistic approach is asking for Free Software drivers and/or documentation.<br><br>Personally I have stopped buying hardware which "works" with GNU/Linux, I have come to the point where I try only to buy hardware which either comes with Free Software drivers from the manufacturer or documentation which allows implementation of Free Software drivers.<br>This is probably the best way of showing these companies what you demand: Freedom.</p>
+        </span>
+        </div>
+    <p>This is one question I have been interested in ever since I started using GNU/Linux.<br><br>Just think about it for a moment. About 20 years ago you got specifications for pretty much every piece of hardware you bought. You were given exact instructions on how to use the hardware you just bought, not only how to install it. Things have changed since then.<br><br>If you buy any piece of hardware today you actually have to expect not to get any documentation on how to "talk" to your new toy. You are only given a CD (sometimes even only a link to a homepage) containing drivers for a few specific operating systems, usually only Microsoft Windows.<br><br>Now I am no driver hacker and so I probably wouldn't be able to implement a driver for anything on my own anyways, but the Free Software community would largely benefit from hardware documentation, as there are a lot of capable driver hackers out there.<br><br>This is not a problem that only affects the Free Software community though. There are a lot of pieces of hardware which do not work on recent proprietary operating systems anymore due to lack of support by its manufacturers.<br>At least this problem would not exist for Free Software operating systems, such as GNU/Linux, if hardware makers would publish documentation of their hardware. The people still using devices which are well beyond their end-of-life could implement drivers on their own, not being dependent on anyone.<br><br>What I am really wondering about in this case is why hardware companies are unable to coin standards for accessing devices of the same class. It works perfectly well for USB (take USB mass storage devices as an example) and I do not understand why there can't be standardized interfaces to other hardware, such as network adapters, as well. On a very-low level these standardized interfaces do work. Just think of PCI, PCI Express or AGP.<br><br>Actually, if you think about this for a few more seconds you should realize one thing: Having standardized interfaces for devices of the same class would cut a lot of costs for hardware makers. Why? Oh well, if they design a brand new networking chip and still implement the given standard there would be no need of writing a new driver. Wait, there would be no need for per-device drivers at all. Implementing a common driver that accesses the standardized interface would be enough, for a whole range of devices.<br><br>So what am I asking of hardware makers? I would love to see companies creating devices of the same class to get together, create standardized interfaces, publish them and implement them in their new devices.<br>I know, this is not likely to happen anytime soon, so a more realistic approach is asking for Free Software drivers and/or documentation.<br><br>Personally I have stopped buying hardware which "works" with GNU/Linux, I have come to the point where I try only to buy hardware which either comes with Free Software drivers from the manufacturer or documentation which allows implementation of Free Software drivers.<br>This is probably the best way of showing these companies what you demand: Freedom.</p>
     
     <ul class="pager"><li class="previous">
             <a href="200803free-software-supporter.html">← Previous post</a>
@@ -77,18 +48,18 @@
         })();
     </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-    
-
     </div>
 
-    </div>
-    </div>
-    <!--End of body content-->
-</div>
-<div class="footerbox">
-    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
-</div>
-
+        </div>
+        <div id="sidebar">
+            <!--Sidebar content-->
+            <h1 id="blog-title">
+                <a href="../" title="Stephan's blog">Stephan's blog</a>
+            </h1>
+            
+            
+            <ul class="unstyled"><li>
+            
     <!-- Social buttons -->
     <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
     <a class="addthis_button_more">Share</a>
@@ -97,4 +68,15 @@
     </li><li><a class="addthis_button_linkedin"></a>
     </li><li><a class="addthis_button_twitter"></a>
     </li></ul></div>
-    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --></li><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+            </li><li>
+            </li></ul></div>
+        <div id="footer">
+            Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+        </div>
+    </div>
+    
+</body></html>

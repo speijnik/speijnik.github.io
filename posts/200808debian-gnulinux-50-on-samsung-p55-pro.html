@@ -1,58 +1,29 @@
-<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Debian GNU/Linux 5.0 ("lenny") on a Samsung P55-Pro T8100 Sevesh | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>Debian GNU/Linux 5.0 ("lenny") on a Samsung P55-Pro T8100 Sevesh | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
-<!-- Menubar -->
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-
-            <a class="brand" href="../">
-            Stephan's blog
-            </a>
-            <!-- Everything you want hidden at 940px or less, place within here -->
-            <div class="nav-collapse collapse">
-                <ul class="nav"><li><a href="../archive.html">Archives</a>
-            </li><li><a href="../categories/index.html">Tags</a>
-            </li><li><a href="../rss.xml">RSS</a>
-
-                </li></ul><ul class="nav pull-right"><li>
-    <a href="#" id="sourcelink">Source</a>
-    </li>
-
-                </ul></div>
-        </div>
-    </div>
-</div>
-<!-- End of Menubar -->
-<div class="container-fluid" id="container-fluid">
-    <!--Body content-->
-    <div class="row-fluid">
-    <div class="span2"></div>
-    <div class="span8">
-    
-    <div class="postbox">
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../rss.xml"></head><body class="home blog">
+    <script type="text/javascript">var addthis_config={"ui_language":"en"};</script><div id="wrap" style="width:850px">
+        <div id="container" style="width:560px">
+            
+    <div class="post">
     
     <h1>Debian GNU/Linux 5.0 ("lenny") on a Samsung P55-Pro T8100 Sevesh</h1>
 
-    <hr><small>
-        Posted: <time class="published" datetime="2008-08-22T10:28:00+02:00">2008-08-22 10:28</time>
-        
+        <div class="meta" style="background-color: rgb(234, 234, 234); ">                    
+        <span class="authordate">
+            Posted: 2008-08-22 10:28 
+               [<a href="//posts/200808debian-gnulinux-50-on-samsung-p55-pro.html" id="sourcelink">Source</a>]
+        </span>
+        <br><span class="tags">Tags: 
+                    <a class="tag" href="../categories/foss.html"><span class="badge badge-info">foss</span></a>
+                    <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
+                    <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+                </span>
+                <br><span class="authordate">
+            
 
-        
-          |  More posts about
-            <a class="tag" href="../categories/foss.html"><span class="badge badge-info">foss</span></a>
-            <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
-            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
-
-    </small>
-    <hr><p>I have recently bought a new laptop, a Samsung P55-Pro T8100 Sevesh. As I was not able to find an installation report for this model anywhere on the internet I thought writing one myself is a good idea. This way people interested in getting this laptop or installing GNU/Linux on it can get some information.<br><br>The article covers both the hardware configuration of the laptop itself, a list of which features of the laptop do work and which don't (do not be afraid, most things work perfectly well out of the box) and finally a short installation report.<br><br><a name="more"></a><br><br>First of all, let's have a look at the hardware configuration of this laptop:<br></p><ul><br><li>Intel Core 2 Duo T8100 CPU (2.1 GHz)</li><br><li>2GiB DDR2 RAM (PC2-5300 - 667MHz)</li><br><li>Intel GM965 chipset with integrated Intel GMA X3100 graphics adapter</li><br><li>250GiB HDD</li><br><li>SXGA+ display with a resolution of 1400x1050</li><br><li>Intel PRO/Wireless 3945ABG WiFi adapter</li><br><li>Intel 82566MC NIC</li><br><li>HD Audio Codec,  ALC262 sound adapter</li><br><li>AuthenTec AES1600 fingerprint reader</li><br><li>Infineon TPM module</li><br><li>Ricoh cardbus bridge (RL5c476 II) plus cardreaders and IEEE1394 controller</li><br><li>One cardbus (PCMCIA II) and one Express Card/54 slot</li><br></ul><br>Now on to the list of what does and what doesn't work with GNU/Linux.<br><br><strong>Intel GMA X3100 graphics adapter</strong><br><br>Works out of the box. Full resolution is possible without a hack, VGA out works out of the box in both mirror and extended desktop mode.<br><strong>NO</strong> xorg.conf modifications are needed in this setup, everything works perfectly well with a nearly empty xorg.conf!<br>The only thing I had to modify was making the virtual display a bit bigger so that extended desktop mode works with an external monitor having a resolution of 1680x1050 pixels.<br><br><strong>Intel 82566MC NIC</strong><br><br>Works out of the box, no further configuration needed.<br><br><strong>Intel PRO/Wireless 3945ABG WiFi adapter</strong><br><br>Works with the iwl3945 driver, however, it requires something Intel calls "ucode", a proprietary firmware. Without this piece of firmware the card does not work. If you want to WiFi without the need for proprietary software (the ucode) you will have to go for a USB, PCMCIA or Express Card/54 WiFi adapter.<br><br><strong>HD Audio Codec,  ALC262 sound adapter</strong><br><br>Works out of the box.<br><br><strong>AuthenTec AES1600 fingerprint reader</strong><br><br>The fingerprint reader is said to be working with <a href="http://reactivated.net/fprint/wiki/Main_Page" title="fprint homepage">fprint</a>, which I did not test yet though. Expect an update sometime soon.<br><br><strong>Infineon TPM module</strong><br><br>Not tested.<br><br><strong>INSTALLATION REPORT</strong><br><br>Basically the Debian GNU/Linux 5.0 installation went smoothly using the beta2 netinstaller image. The system booted from cdrom and the installation process worked fine.<br>After rebooting into the new system however the system froze. No response, nothing. The last message on the screen suggested that the ACPI video module is the problem.<br>After rebooting using <em>init=/bin/sh</em> as boot argument I modified <em>/etc/modprobe.d/blacklist</em> and added the following line:<br><blockquote>blacklist video</blockquote><br>This is only a workaround for the real problem. The bug is present in Linux 2.6.25 and Linux 2.6.26. A bug report has been filed (<a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495697">here</a>). I will update this page as soon as the problem has been resolved.<br><br>There is another thing which doesn't seem to work. However, this could be (and likely is) related to the broken ACPI video kernel module: adjusting the display brightness.<br>On AC power the system boots with maximum brightness, which cannot be adjusted. Unplugging the AC adapter lowers the brightness.<br>When running on battery one can use the "brightness up" key combination to switch to maximum brightness, however, this <strong>cannot</strong> be undone.<br><br><strong>CONCLUSION</strong><br><br>The laptop is not only usable under GNU/Linux but most hardware works, even out of the box. The only real problem is the broken ACPI video module, which hopefully gets fixed soon.<br>I hope this article helps those who would like to get one of these laptops, but are not sure of its GNU/Linux compatibility, just like I was.
+        </span>
+        </div>
+    <p>I have recently bought a new laptop, a Samsung P55-Pro T8100 Sevesh. As I was not able to find an installation report for this model anywhere on the internet I thought writing one myself is a good idea. This way people interested in getting this laptop or installing GNU/Linux on it can get some information.<br><br>The article covers both the hardware configuration of the laptop itself, a list of which features of the laptop do work and which don't (do not be afraid, most things work perfectly well out of the box) and finally a short installation report.<br><br><a name="more"></a><br><br>First of all, let's have a look at the hardware configuration of this laptop:<br></p><ul><br><li>Intel Core 2 Duo T8100 CPU (2.1 GHz)</li><br><li>2GiB DDR2 RAM (PC2-5300 - 667MHz)</li><br><li>Intel GM965 chipset with integrated Intel GMA X3100 graphics adapter</li><br><li>250GiB HDD</li><br><li>SXGA+ display with a resolution of 1400x1050</li><br><li>Intel PRO/Wireless 3945ABG WiFi adapter</li><br><li>Intel 82566MC NIC</li><br><li>HD Audio Codec,  ALC262 sound adapter</li><br><li>AuthenTec AES1600 fingerprint reader</li><br><li>Infineon TPM module</li><br><li>Ricoh cardbus bridge (RL5c476 II) plus cardreaders and IEEE1394 controller</li><br><li>One cardbus (PCMCIA II) and one Express Card/54 slot</li><br></ul><br>Now on to the list of what does and what doesn't work with GNU/Linux.<br><br><strong>Intel GMA X3100 graphics adapter</strong><br><br>Works out of the box. Full resolution is possible without a hack, VGA out works out of the box in both mirror and extended desktop mode.<br><strong>NO</strong> xorg.conf modifications are needed in this setup, everything works perfectly well with a nearly empty xorg.conf!<br>The only thing I had to modify was making the virtual display a bit bigger so that extended desktop mode works with an external monitor having a resolution of 1680x1050 pixels.<br><br><strong>Intel 82566MC NIC</strong><br><br>Works out of the box, no further configuration needed.<br><br><strong>Intel PRO/Wireless 3945ABG WiFi adapter</strong><br><br>Works with the iwl3945 driver, however, it requires something Intel calls "ucode", a proprietary firmware. Without this piece of firmware the card does not work. If you want to WiFi without the need for proprietary software (the ucode) you will have to go for a USB, PCMCIA or Express Card/54 WiFi adapter.<br><br><strong>HD Audio Codec,  ALC262 sound adapter</strong><br><br>Works out of the box.<br><br><strong>AuthenTec AES1600 fingerprint reader</strong><br><br>The fingerprint reader is said to be working with <a href="http://reactivated.net/fprint/wiki/Main_Page" title="fprint homepage">fprint</a>, which I did not test yet though. Expect an update sometime soon.<br><br><strong>Infineon TPM module</strong><br><br>Not tested.<br><br><strong>INSTALLATION REPORT</strong><br><br>Basically the Debian GNU/Linux 5.0 installation went smoothly using the beta2 netinstaller image. The system booted from cdrom and the installation process worked fine.<br>After rebooting into the new system however the system froze. No response, nothing. The last message on the screen suggested that the ACPI video module is the problem.<br>After rebooting using <em>init=/bin/sh</em> as boot argument I modified <em>/etc/modprobe.d/blacklist</em> and added the following line:<br><blockquote>blacklist video</blockquote><br>This is only a workaround for the real problem. The bug is present in Linux 2.6.25 and Linux 2.6.26. A bug report has been filed (<a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=495697">here</a>). I will update this page as soon as the problem has been resolved.<br><br>There is another thing which doesn't seem to work. However, this could be (and likely is) related to the broken ACPI video kernel module: adjusting the display brightness.<br>On AC power the system boots with maximum brightness, which cannot be adjusted. Unplugging the AC adapter lowers the brightness.<br>When running on battery one can use the "brightness up" key combination to switch to maximum brightness, however, this <strong>cannot</strong> be undone.<br><br><strong>CONCLUSION</strong><br><br>The laptop is not only usable under GNU/Linux but most hardware works, even out of the box. The only real problem is the broken ACPI video module, which hopefully gets fixed soon.<br>I hope this article helps those who would like to get one of these laptops, but are not sure of its GNU/Linux compatibility, just like I was.
     
     <ul class="pager"><li class="previous">
             <a href="200807is-trying-to-fix-esmtp-really-worth-it.html">← Previous post</a>
@@ -76,18 +47,18 @@
         })();
     </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-    
-
     </div>
 
-    </div>
-    </div>
-    <!--End of body content-->
-</div>
-<div class="footerbox">
-    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
-</div>
-
+        </div>
+        <div id="sidebar">
+            <!--Sidebar content-->
+            <h1 id="blog-title">
+                <a href="../" title="Stephan's blog">Stephan's blog</a>
+            </h1>
+            
+            
+            <ul class="unstyled"><li>
+            
     <!-- Social buttons -->
     <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
     <a class="addthis_button_more">Share</a>
@@ -96,4 +67,15 @@
     </li><li><a class="addthis_button_linkedin"></a>
     </li><li><a class="addthis_button_twitter"></a>
     </li></ul></div>
-    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --></li><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+            </li><li>
+            </li></ul></div>
+        <div id="footer">
+            Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+        </div>
+    </div>
+    
+</body></html>

@@ -1,57 +1,28 @@
-<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>What's all the fuzz about canonical-census? | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>What's all the fuzz about canonical-census? | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
-<!-- Menubar -->
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-
-            <a class="brand" href="../">
-            Stephan's blog
-            </a>
-            <!-- Everything you want hidden at 940px or less, place within here -->
-            <div class="nav-collapse collapse">
-                <ul class="nav"><li><a href="../archive.html">Archives</a>
-            </li><li><a href="../categories/index.html">Tags</a>
-            </li><li><a href="../rss.xml">RSS</a>
-
-                </li></ul><ul class="nav pull-right"><li>
-    <a href="#" id="sourcelink">Source</a>
-    </li>
-
-                </ul></div>
-        </div>
-    </div>
-</div>
-<!-- End of Menubar -->
-<div class="container-fluid" id="container-fluid">
-    <!--Body content-->
-    <div class="row-fluid">
-    <div class="span2"></div>
-    <div class="span8">
-    
-    <div class="postbox">
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../rss.xml"></head><body class="home blog">
+    <script type="text/javascript">var addthis_config={"ui_language":"en"};</script><div id="wrap" style="width:850px">
+        <div id="container" style="width:560px">
+            
+    <div class="post">
     
     <h1>What's all the fuzz about canonical-census?</h1>
 
-    <hr><small>
-        Posted: <time class="published" datetime="2010-08-10T13:07:00+02:00">2010-08-10 13:07</time>
-        
+        <div class="meta" style="background-color: rgb(234, 234, 234); ">                    
+        <span class="authordate">
+            Posted: 2010-08-10 13:07 
+               [<a href="//posts/201008whats-all-fuzz-about-canonical-census.html" id="sourcelink">Source</a>]
+        </span>
+        <br><span class="tags">Tags: 
+                    <a class="tag" href="../categories/canonical.html"><span class="badge badge-info">Canonical</span></a>
+                    <a class="tag" href="../categories/ubuntu.html"><span class="badge badge-info">Ubuntu</span></a>
+                </span>
+                <br><span class="authordate">
+            
 
-        
-          |  More posts about
-            <a class="tag" href="../categories/canonical.html"><span class="badge badge-info">Canonical</span></a>
-            <a class="tag" href="../categories/ubuntu.html"><span class="badge badge-info">Ubuntu</span></a>
-
-    </small>
-    <hr><p>I know I have not updated this blog in quite a long time now, but something caught my attention today: canonical-census.<br><br>As slashdot.org <a href="http://linux.slashdot.org/story/10/08/10/0319243/Canonical-Begins-Tracking-Ubuntu-Installations">reports</a> Canonical begins with tracking their (OEM) installations. Now it's obvious that people are uncomfortable with a program running on their system which phones back to their OS vendor, that's why I have had a quick look at what exactly canonical-census does.<br><br>Firstly however, I would like to point out that the report on slashdot.org is very clear about which information is being gathered, being "<i>the number of times this system previously sent to Canonical [...], the Ubuntu distributor channel, the product name as acquired by the system's DMI information, and which Ubuntu release is being used</i>". And it's perfectly correct. After getting the canonical-census Debian source package (using dget -u https://launchpad.net/ubuntu/+archive/partner/+files/canonical-census_0.1.dsc) the source package shows, besides the Debian packaging information, two scripts:<br><br></p><ul><li>census (written in Python) and</li><li>send-census (a GNU bash script).</li></ul><div>Now what do those scripts actually do?</div><div><br></div><div><b>send-census</b> is installed in /etc/cron.daily, which means it will be executed once a day by the system's cron daemon. It's a mere 48 lines long, and its code is quite simple. So everyone with at least some shell scripting experience can easily check what it's doing. Now guess what, it sends exactly the information as reported on slashdot to Canonical. Nothing more and nothing less.</div><div><br></div><div>Technically it keeps a plain text file containing a single number as its call-counter, residing in <i>/var/lib/send-install-count/counter</i> and uses an on my Ubuntu Lucid system nonexistent <i>/var/lib/ubuntu_dist_channel</i> file for getting information about the distribution channel.</div><div>The above mentioned "system's DMI information" is not the whole bunch of DMI information available, but only the contents of <i>/sys/class/dmi/id/product_name</i>, which strangely enough returns "System Product Name" on my machine. Last but not least it uses lsb-release to get the distribution release (ie. 10.04 for my system).</div><div><br></div><div>Now those four pieces of information are sent to <i>http://census.canonical.com/submit</i> via a simple HTTP GET query, using wget. The full URL with all the parameters added is:<br><i>http://census.canonical.com/submit?count=<b>count</b>&amp;dcd=<b>dist_channel</b>&amp;product=<b>dmi_product_name</b>&amp;release=<b>ubuntu_release_version</b></i></div><div><i><br></i></div><div>The second script, <b>census</b>, is the part working on Canonical's script. Basically census reads in their Apache's access log file and creates an SQLite database from the contents of the log file. With 391 lines this script is a bit longer, but it does not end up in the Debian package at all.</div><div><br></div><div>Personally I do not see how Canonical or one of their partners could possibly do anything harmful with that information. Comparing this to Debian's popcon reveals that Debian is gathering a lot more information.</div><div><br></div><div>Now there are two more things one should consider: census is targeted at OEMs, which means its unlikely that it will end up on each and every Ubuntu installation and can be uninstalled by removing the canonical-census package with your favorite package manager.</div><div><br></div><div>Finally, think about this for a second: It's a shell script you can always examine. There is no hidden magic and it's a plain HTTP request the script is sending. No evil things happening there.<br>And now compare that to what other (often proprietary) software vendors do and how much data they submit, possibly even in encrypted form so you do not know for sure what is being sent to them.</div><div><br></div><div>Personally I welcome the openness of Canonical with providing their users with the package's code this early and being straight about what information it submits. They could have silently added it to those installations after all...</div><div><br></div><div>Happy hacking!</div><div><br></div>
+        </span>
+        </div>
+    <p>I know I have not updated this blog in quite a long time now, but something caught my attention today: canonical-census.<br><br>As slashdot.org <a href="http://linux.slashdot.org/story/10/08/10/0319243/Canonical-Begins-Tracking-Ubuntu-Installations">reports</a> Canonical begins with tracking their (OEM) installations. Now it's obvious that people are uncomfortable with a program running on their system which phones back to their OS vendor, that's why I have had a quick look at what exactly canonical-census does.<br><br>Firstly however, I would like to point out that the report on slashdot.org is very clear about which information is being gathered, being "<i>the number of times this system previously sent to Canonical [...], the Ubuntu distributor channel, the product name as acquired by the system's DMI information, and which Ubuntu release is being used</i>". And it's perfectly correct. After getting the canonical-census Debian source package (using dget -u https://launchpad.net/ubuntu/+archive/partner/+files/canonical-census_0.1.dsc) the source package shows, besides the Debian packaging information, two scripts:<br><br></p><ul><li>census (written in Python) and</li><li>send-census (a GNU bash script).</li></ul><div>Now what do those scripts actually do?</div><div><br></div><div><b>send-census</b> is installed in /etc/cron.daily, which means it will be executed once a day by the system's cron daemon. It's a mere 48 lines long, and its code is quite simple. So everyone with at least some shell scripting experience can easily check what it's doing. Now guess what, it sends exactly the information as reported on slashdot to Canonical. Nothing more and nothing less.</div><div><br></div><div>Technically it keeps a plain text file containing a single number as its call-counter, residing in <i>/var/lib/send-install-count/counter</i> and uses an on my Ubuntu Lucid system nonexistent <i>/var/lib/ubuntu_dist_channel</i> file for getting information about the distribution channel.</div><div>The above mentioned "system's DMI information" is not the whole bunch of DMI information available, but only the contents of <i>/sys/class/dmi/id/product_name</i>, which strangely enough returns "System Product Name" on my machine. Last but not least it uses lsb-release to get the distribution release (ie. 10.04 for my system).</div><div><br></div><div>Now those four pieces of information are sent to <i>http://census.canonical.com/submit</i> via a simple HTTP GET query, using wget. The full URL with all the parameters added is:<br><i>http://census.canonical.com/submit?count=<b>count</b>&amp;dcd=<b>dist_channel</b>&amp;product=<b>dmi_product_name</b>&amp;release=<b>ubuntu_release_version</b></i></div><div><i><br></i></div><div>The second script, <b>census</b>, is the part working on Canonical's script. Basically census reads in their Apache's access log file and creates an SQLite database from the contents of the log file. With 391 lines this script is a bit longer, but it does not end up in the Debian package at all.</div><div><br></div><div>Personally I do not see how Canonical or one of their partners could possibly do anything harmful with that information. Comparing this to Debian's popcon reveals that Debian is gathering a lot more information.</div><div><br></div><div>Now there are two more things one should consider: census is targeted at OEMs, which means its unlikely that it will end up on each and every Ubuntu installation and can be uninstalled by removing the canonical-census package with your favorite package manager.</div><div><br></div><div>Finally, think about this for a second: It's a shell script you can always examine. There is no hidden magic and it's a plain HTTP request the script is sending. No evil things happening there.<br>And now compare that to what other (often proprietary) software vendors do and how much data they submit, possibly even in encrypted form so you do not know for sure what is being sent to them.</div><div><br></div><div>Personally I welcome the openness of Canonical with providing their users with the package's code this early and being straight about what information it submits. They could have silently added it to those installations after all...</div><div><br></div><div>Happy hacking!</div><div><br></div>
     
     <ul class="pager"><li class="previous">
             <a href="200912rest-in-peace-flo-1311198616122009.html">← Previous post</a>
@@ -75,18 +46,18 @@
         })();
     </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-    
-
     </div>
 
-    </div>
-    </div>
-    <!--End of body content-->
-</div>
-<div class="footerbox">
-    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
-</div>
-
+        </div>
+        <div id="sidebar">
+            <!--Sidebar content-->
+            <h1 id="blog-title">
+                <a href="../" title="Stephan's blog">Stephan's blog</a>
+            </h1>
+            
+            
+            <ul class="unstyled"><li>
+            
     <!-- Social buttons -->
     <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
     <a class="addthis_button_more">Share</a>
@@ -95,4 +66,15 @@
     </li><li><a class="addthis_button_linkedin"></a>
     </li><li><a class="addthis_button_twitter"></a>
     </li></ul></div>
-    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --></li><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+            </li><li>
+            </li></ul></div>
+        <div id="footer">
+            Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+        </div>
+    </div>
+    
+</body></html>

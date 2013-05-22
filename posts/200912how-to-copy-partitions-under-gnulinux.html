@@ -1,58 +1,29 @@
-<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>How to copy partitions under GNU/Linux the easy way | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>How to copy partitions under GNU/Linux the easy way | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
-<!-- Menubar -->
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-
-            <a class="brand" href="../">
-            Stephan's blog
-            </a>
-            <!-- Everything you want hidden at 940px or less, place within here -->
-            <div class="nav-collapse collapse">
-                <ul class="nav"><li><a href="../archive.html">Archives</a>
-            </li><li><a href="../categories/index.html">Tags</a>
-            </li><li><a href="../rss.xml">RSS</a>
-
-                </li></ul><ul class="nav pull-right"><li>
-    <a href="#" id="sourcelink">Source</a>
-    </li>
-
-                </ul></div>
-        </div>
-    </div>
-</div>
-<!-- End of Menubar -->
-<div class="container-fluid" id="container-fluid">
-    <!--Body content-->
-    <div class="row-fluid">
-    <div class="span2"></div>
-    <div class="span8">
-    
-    <div class="postbox">
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../rss.xml"></head><body class="home blog">
+    <script type="text/javascript">var addthis_config={"ui_language":"en"};</script><div id="wrap" style="width:850px">
+        <div id="container" style="width:560px">
+            
+    <div class="post">
     
     <h1>How to copy partitions under GNU/Linux the easy way</h1>
 
-    <hr><small>
-        Posted: <time class="published" datetime="2009-12-01T17:22:00+01:00">2009-12-01 17:22</time>
-        
+        <div class="meta" style="background-color: rgb(234, 234, 234); ">                    
+        <span class="authordate">
+            Posted: 2009-12-01 17:22 
+               [<a href="//posts/200912how-to-copy-partitions-under-gnulinux.html" id="sourcelink">Source</a>]
+        </span>
+        <br><span class="tags">Tags: 
+                    <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
+                    <a class="tag" href="../categories/gparted.html"><span class="badge badge-info">gparted</span></a>
+                    <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+                </span>
+                <br><span class="authordate">
+            
 
-        
-          |  More posts about
-            <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
-            <a class="tag" href="../categories/gparted.html"><span class="badge badge-info">gparted</span></a>
-            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
-
-    </small>
-    <hr><p>After getting a new disk for my Popcorn Hour A-110 device I had to copy all partitions from the old disk onto the new one so I do not have to reinstall some applications and reconfigure everything.<br><br>After searching the web and trying to find a free alternative to Norton Ghost and Acronis True Image, preferably not using a boot disk on its own (I did not want to backup my workstation after all, just a simple partition to partition copy between two SATA disks) I gave up and decided to do the copying manually.<br><br>So I fired up gparted to do the partitioning, did a right click and... I noticed that gparted supports copy/paste. Being curious about what this could potentially do I gave it a try. I marked partition one on the old disk, did a copy, went to the new disk and clicked on paste - and guess what, gparted did what I was looking for.<br><br>Putting a long story short: you can copy whole partitions using gparted's copy/paste mechanism and even resize them whilst doing so. I am somehow ashamed I did not notice this feature earlier, having been a gparted user for a few years now and I can imagine I am not the only one who missed that.</p>
+        </span>
+        </div>
+    <p>After getting a new disk for my Popcorn Hour A-110 device I had to copy all partitions from the old disk onto the new one so I do not have to reinstall some applications and reconfigure everything.<br><br>After searching the web and trying to find a free alternative to Norton Ghost and Acronis True Image, preferably not using a boot disk on its own (I did not want to backup my workstation after all, just a simple partition to partition copy between two SATA disks) I gave up and decided to do the copying manually.<br><br>So I fired up gparted to do the partitioning, did a right click and... I noticed that gparted supports copy/paste. Being curious about what this could potentially do I gave it a try. I marked partition one on the old disk, did a copy, went to the new disk and clicked on paste - and guess what, gparted did what I was looking for.<br><br>Putting a long story short: you can copy whole partitions using gparted's copy/paste mechanism and even resize them whilst doing so. I am somehow ashamed I did not notice this feature earlier, having been a gparted user for a few years now and I can imagine I am not the only one who missed that.</p>
     
     <ul class="pager"><li class="previous">
             <a href="200911kvm-qemu-and-magic-of-ubuntu-vm-builder.html">← Previous post</a>
@@ -76,18 +47,18 @@
         })();
     </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-    
-
     </div>
 
-    </div>
-    </div>
-    <!--End of body content-->
-</div>
-<div class="footerbox">
-    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
-</div>
-
+        </div>
+        <div id="sidebar">
+            <!--Sidebar content-->
+            <h1 id="blog-title">
+                <a href="../" title="Stephan's blog">Stephan's blog</a>
+            </h1>
+            
+            
+            <ul class="unstyled"><li>
+            
     <!-- Social buttons -->
     <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
     <a class="addthis_button_more">Share</a>
@@ -96,4 +67,15 @@
     </li><li><a class="addthis_button_linkedin"></a>
     </li><li><a class="addthis_button_twitter"></a>
     </li></ul></div>
-    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --></li><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+            </li><li>
+            </li></ul></div>
+        <div id="footer">
+            Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+        </div>
+    </div>
+    
+</body></html>

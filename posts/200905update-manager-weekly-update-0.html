@@ -1,59 +1,30 @@
-<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>update-manager weekly update #0 | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>update-manager weekly update #0 | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
-<!-- Menubar -->
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-
-            <a class="brand" href="../">
-            Stephan's blog
-            </a>
-            <!-- Everything you want hidden at 940px or less, place within here -->
-            <div class="nav-collapse collapse">
-                <ul class="nav"><li><a href="../archive.html">Archives</a>
-            </li><li><a href="../categories/index.html">Tags</a>
-            </li><li><a href="../rss.xml">RSS</a>
-
-                </li></ul><ul class="nav pull-right"><li>
-    <a href="#" id="sourcelink">Source</a>
-    </li>
-
-                </ul></div>
-        </div>
-    </div>
-</div>
-<!-- End of Menubar -->
-<div class="container-fluid" id="container-fluid">
-    <!--Body content-->
-    <div class="row-fluid">
-    <div class="span2"></div>
-    <div class="span8">
-    
-    <div class="postbox">
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../rss.xml"></head><body class="home blog">
+    <script type="text/javascript">var addthis_config={"ui_language":"en"};</script><div id="wrap" style="width:850px">
+        <div id="container" style="width:560px">
+            
+    <div class="post">
     
     <h1>update-manager weekly update #0</h1>
 
-    <hr><small>
-        Posted: <time class="published" datetime="2009-05-28T00:52:00+02:00">2009-05-28 00:52</time>
-        
+        <div class="meta" style="background-color: rgb(234, 234, 234); ">                    
+        <span class="authordate">
+            Posted: 2009-05-28 00:52 
+               [<a href="//posts/200905update-manager-weekly-update-0.html" id="sourcelink">Source</a>]
+        </span>
+        <br><span class="tags">Tags: 
+                    <a class="tag" href="../categories/gsoc.html"><span class="badge badge-info">gsoc</span></a>
+                    <a class="tag" href="../categories/debian.html"><span class="badge badge-info">Debian</span></a>
+                    <a class="tag" href="../categories/update-manager.html"><span class="badge badge-info">update-manager</span></a>
+                    <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+                </span>
+                <br><span class="authordate">
+            
 
-        
-          |  More posts about
-            <a class="tag" href="../categories/gsoc.html"><span class="badge badge-info">gsoc</span></a>
-            <a class="tag" href="../categories/debian.html"><span class="badge badge-info">Debian</span></a>
-            <a class="tag" href="../categories/update-manager.html"><span class="badge badge-info">update-manager</span></a>
-            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
-
-    </small>
-    <hr><p>It has been more than a month since I last wrote about my work on update-manager during this year's Google Summer Of Code and I am somewhat ashamed I wasn't able to provide you with updates more regularly.<br><br>So first of all, yes, I did do some work and yes, there has been quite some progress. Basically both private and university stuff have kept me from writing and that's why I'd like to start with this series of weekly updates today.<br>This series are meant to summarize what has happened during a week of writing code and give you an overview of what's happening. This first issue however will sum up the past month.<br><br>So let me begin explaining what has happened since my <a href="http://blog.peijnik.at/2009/04/24/update-manager-to-become-more-modular/" title="update manager to become more modular @blog.peijnik.at">last post</a>.<br><br><a name="more"></a><strong>update-manager bazaar repository</strong><br><br>All code I have written so far is available through a public bazaar branch on <a href="http://launchpad.net" title="launchpad.net">launchpad.net</a>. My branch's page can be found <a href="https://code.launchpad.net/~speijnik/update-manager/distribution-independent" title="my update-manager branch @code.launchpad.net">here</a> and provides you with its history and of course instructions on how to obtain the code. The location is only temporary though, as I am going to move hosting over to <a href="http://alioth.debian.org" title="alioth.debian.org">alioth.debian.org</a>. This is on my task list for next week.<br><br><strong>modular design</strong><br><br>I have ripped apart nearly all of update-manager and put it together in a more modular way, which should implementing new frontends or backends more easy, whilst also simplifying code maintenance.<br><br>The new design consists of four major parts:<br></p><ul><br><li>The application class is responsible for parsing command line arguments, initializing all other components correctly and coordinate communication between the frontend and the backend.</li><br><li>The backend itself is defined through the UpdateManager.Backend.BackendBase class and each implementation subclasses BackendBase. It is responsible for interacting with apt.</li><br><li>The frontend is again defined through a base class, UpdateManager.Frontend.FrontendBase. This part of update-manager provides the userinterface, handles user input and starts operations accordingly.</li><br><li>Lastly there is the distribution-specific part, which lives inside the UpdateManager.DistSpecific Python module and is defined by its own base class, DistBase.</li><br></ul><br><strong>backend implementation</strong><br><br>When I started working on update-manager it heavily relied on synaptic and used it to do the dirty-work. However, together with my mentor, mvo, I decided to drop synaptic support and rather concentrate on using python-apt. This means that the only backend implementation right now is a python-apt backend.<br><br>The python-apt backend is currently a work in progress, but already includes some basic functionality. Right now it can (re-)load the package cache and package lists and is able to provide a list of packages which are upgradable to the frontend.<br>Whilst implementing these functions I noticed some shortcomings of python-apt itself, fixed those and got mvo included in <a href="https://code.launchpad.net/~mvo/python-apt/python-apt--mvo" title="mvo's python-apt branch @code.launchpad.net">his python-apt branch</a> at launchpad.<br><br><strong>frontend implementation</strong><br><br>I started re-implementing the Gtk frontend as provided through current update-manager and right now it visualizes the package cache reloading process and provides users with a list of upgradable packages. However, that's pretty much all of the functionality it includes right now, which is why implementing more functions is pretty much on the top of my todo list.<br><br>Additionally I have ported the text frontend, as included in Ubuntu, to the new modular system, and this frontend's code really shows how easy adding a frontend with the new modular design is. This frontend contains the same functionality as the Gtk frontend.<br><br><strong>distribution specific code</strong><br><br>The core described above does not include any distribution specific code anymore, which is the main focus of this project. The implementations of distribution-specific functionality contains classifiers for update categories for both Debian and Ubuntu, whilst I focused on getting things right with the Debian implementation for now. These classifiers allow the frontend to let the user know which kind of update they are about to install, like a security update, a recommended upgrade or a third-party (unofficial) upgrade.<br><br><strong>documentation</strong><br><br>As update-manager was poorly (read: hardly at all) documented I started documenting the API using sphinx. However, right now the generated documentation cannot be found anywhere yet. This should change as soon as an alioth project for update-manager has been created.<br><br><strong>next week's tasks</strong><br><br>I would also like to provide you with my task list for the coming week. The list, ordered by priority, is:<br><ul><br><li>Register an alioth project and move the bazaar branch to bzr.debian.org</li><br><li>Generate an HTML version of the API documentation and put it on alioth.</li><br><li>Implement changelog-fetching for the Debian-specific module and make use of that from within the code and the Gtk frontend.</li><br></ul><br>As you can see this list is rather short. This can mainly be attributed to a few university assignments, and instead of providing a long list of tasks which I probably won't be able to finish I rather keep the list short and hopefully get things not on this list done too.
+        </span>
+        </div>
+    <p>It has been more than a month since I last wrote about my work on update-manager during this year's Google Summer Of Code and I am somewhat ashamed I wasn't able to provide you with updates more regularly.<br><br>So first of all, yes, I did do some work and yes, there has been quite some progress. Basically both private and university stuff have kept me from writing and that's why I'd like to start with this series of weekly updates today.<br>This series are meant to summarize what has happened during a week of writing code and give you an overview of what's happening. This first issue however will sum up the past month.<br><br>So let me begin explaining what has happened since my <a href="http://blog.peijnik.at/2009/04/24/update-manager-to-become-more-modular/" title="update manager to become more modular @blog.peijnik.at">last post</a>.<br><br><a name="more"></a><strong>update-manager bazaar repository</strong><br><br>All code I have written so far is available through a public bazaar branch on <a href="http://launchpad.net" title="launchpad.net">launchpad.net</a>. My branch's page can be found <a href="https://code.launchpad.net/~speijnik/update-manager/distribution-independent" title="my update-manager branch @code.launchpad.net">here</a> and provides you with its history and of course instructions on how to obtain the code. The location is only temporary though, as I am going to move hosting over to <a href="http://alioth.debian.org" title="alioth.debian.org">alioth.debian.org</a>. This is on my task list for next week.<br><br><strong>modular design</strong><br><br>I have ripped apart nearly all of update-manager and put it together in a more modular way, which should implementing new frontends or backends more easy, whilst also simplifying code maintenance.<br><br>The new design consists of four major parts:<br></p><ul><br><li>The application class is responsible for parsing command line arguments, initializing all other components correctly and coordinate communication between the frontend and the backend.</li><br><li>The backend itself is defined through the UpdateManager.Backend.BackendBase class and each implementation subclasses BackendBase. It is responsible for interacting with apt.</li><br><li>The frontend is again defined through a base class, UpdateManager.Frontend.FrontendBase. This part of update-manager provides the userinterface, handles user input and starts operations accordingly.</li><br><li>Lastly there is the distribution-specific part, which lives inside the UpdateManager.DistSpecific Python module and is defined by its own base class, DistBase.</li><br></ul><br><strong>backend implementation</strong><br><br>When I started working on update-manager it heavily relied on synaptic and used it to do the dirty-work. However, together with my mentor, mvo, I decided to drop synaptic support and rather concentrate on using python-apt. This means that the only backend implementation right now is a python-apt backend.<br><br>The python-apt backend is currently a work in progress, but already includes some basic functionality. Right now it can (re-)load the package cache and package lists and is able to provide a list of packages which are upgradable to the frontend.<br>Whilst implementing these functions I noticed some shortcomings of python-apt itself, fixed those and got mvo included in <a href="https://code.launchpad.net/~mvo/python-apt/python-apt--mvo" title="mvo's python-apt branch @code.launchpad.net">his python-apt branch</a> at launchpad.<br><br><strong>frontend implementation</strong><br><br>I started re-implementing the Gtk frontend as provided through current update-manager and right now it visualizes the package cache reloading process and provides users with a list of upgradable packages. However, that's pretty much all of the functionality it includes right now, which is why implementing more functions is pretty much on the top of my todo list.<br><br>Additionally I have ported the text frontend, as included in Ubuntu, to the new modular system, and this frontend's code really shows how easy adding a frontend with the new modular design is. This frontend contains the same functionality as the Gtk frontend.<br><br><strong>distribution specific code</strong><br><br>The core described above does not include any distribution specific code anymore, which is the main focus of this project. The implementations of distribution-specific functionality contains classifiers for update categories for both Debian and Ubuntu, whilst I focused on getting things right with the Debian implementation for now. These classifiers allow the frontend to let the user know which kind of update they are about to install, like a security update, a recommended upgrade or a third-party (unofficial) upgrade.<br><br><strong>documentation</strong><br><br>As update-manager was poorly (read: hardly at all) documented I started documenting the API using sphinx. However, right now the generated documentation cannot be found anywhere yet. This should change as soon as an alioth project for update-manager has been created.<br><br><strong>next week's tasks</strong><br><br>I would also like to provide you with my task list for the coming week. The list, ordered by priority, is:<br><ul><br><li>Register an alioth project and move the bazaar branch to bzr.debian.org</li><br><li>Generate an HTML version of the API documentation and put it on alioth.</li><br><li>Implement changelog-fetching for the Debian-specific module and make use of that from within the code and the Gtk frontend.</li><br></ul><br>As you can see this list is rather short. This can mainly be attributed to a few university assignments, and instead of providing a long list of tasks which I probably won't be able to finish I rather keep the list short and hopefully get things not on this list done too.
     
     <ul class="pager"><li class="previous">
             <a href="200904update-manager-to-become-more-modular.html">← Previous post</a>
@@ -77,18 +48,18 @@
         })();
     </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-    
-
     </div>
 
-    </div>
-    </div>
-    <!--End of body content-->
-</div>
-<div class="footerbox">
-    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
-</div>
-
+        </div>
+        <div id="sidebar">
+            <!--Sidebar content-->
+            <h1 id="blog-title">
+                <a href="../" title="Stephan's blog">Stephan's blog</a>
+            </h1>
+            
+            
+            <ul class="unstyled"><li>
+            
     <!-- Social buttons -->
     <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
     <a class="addthis_button_more">Share</a>
@@ -97,4 +68,15 @@
     </li><li><a class="addthis_button_linkedin"></a>
     </li><li><a class="addthis_button_twitter"></a>
     </li></ul></div>
-    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --></li><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+            </li><li>
+            </li></ul></div>
+        <div id="footer">
+            Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+        </div>
+    </div>
+    
+</body></html>

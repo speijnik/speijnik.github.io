@@ -1,57 +1,28 @@
-<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>nwu - an introduction | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>nwu - an introduction | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
-<!-- Menubar -->
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-
-            <a class="brand" href="../">
-            Stephan's blog
-            </a>
-            <!-- Everything you want hidden at 940px or less, place within here -->
-            <div class="nav-collapse collapse">
-                <ul class="nav"><li><a href="../archive.html">Archives</a>
-            </li><li><a href="../categories/index.html">Tags</a>
-            </li><li><a href="../rss.xml">RSS</a>
-
-                </li></ul><ul class="nav pull-right"><li>
-    <a href="#" id="sourcelink">Source</a>
-    </li>
-
-                </ul></div>
-        </div>
-    </div>
-</div>
-<!-- End of Menubar -->
-<div class="container-fluid" id="container-fluid">
-    <!--Body content-->
-    <div class="row-fluid">
-    <div class="span2"></div>
-    <div class="span8">
-    
-    <div class="postbox">
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../rss.xml"></head><body class="home blog">
+    <script type="text/javascript">var addthis_config={"ui_language":"en"};</script><div id="wrap" style="width:850px">
+        <div id="container" style="width:560px">
+            
+    <div class="post">
     
     <h1>nwu - an introduction</h1>
 
-    <hr><small>
-        Posted: <time class="published" datetime="2008-01-13T10:57:00+01:00">2008-01-13 10:57</time>
-        
+        <div class="meta" style="background-color: rgb(234, 234, 234); ">                    
+        <span class="authordate">
+            Posted: 2008-01-13 10:57 
+               [<a href="//posts/200801nwu-introduction.html" id="sourcelink">Source</a>]
+        </span>
+        <br><span class="tags">Tags: 
+                    <a class="tag" href="../categories/nwu.html"><span class="badge badge-info">nwu</span></a>
+                    <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+                </span>
+                <br><span class="authordate">
+            
 
-        
-          |  More posts about
-            <a class="tag" href="../categories/nwu.html"><span class="badge badge-info">nwu</span></a>
-            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
-
-    </small>
-    <hr><p>This article should give you a brief overview of what <a href="http://cetico.org/nwu" target="_blank">network-wide updates</a>, one of my projects, is about.<br><br>Network wide updates, or nwu, is a <a href="http://www.gnu.org/philosophy/free-sw.html">free software</a> package licensed under the <a href="http://gnu.org/licenses/gpl.html" target="_blank">GPL</a> (version 3 or later). It allows an administrator to remotely install software on and roll out security upgrades to managed computers. It is targeted at GNU/Linux systems using the <a href="http://en.wikipedia.org/wiki/Advanced_Packaging_Tool">Advanced Packaging Tool</a> (APT) for package management and thus should run fine on all GNU/Linux distributions based on <a href="http://debian.org">Debian GNU/Linux</a> (such as <a href="http://gnewsense.org">gNewSense</a> and all <a href="http://ubuntu.com">Ubuntu</a> flavors).<br><br><a name="more"></a>It further gathers data about all managed computers in a database, which gives the administrator an overview about which systems are managed, the hardware configurations they have, the software installed on them and pending security updates.<br><br>The system is split into two major components: the server, which is the central management point, and the clients, usually referred to as agents, which report to the server.<br><br>Now let's go into nasty technical details. nwu is implemented in <a href="http://python.org">Python</a>, using XML-RPC and python-gnutls (and this way the <a href="http://gnu.org/software/gnutls">GnuTLS</a> library) for secure communication between the server and its agents. It further makes use of X.509-certificate authentication and provides an integrated CA-system which simplifies use of this method a great deal.<br><br>Currently nwu is in an alpha development stage, but moving forward quite fast. We are expecting to be able to release a stable version quite soon.<br><br>The development team is made up of <a class="ext-link" href="http://cetico.org/tech"><span class="icon">Yves Junqueira</span></a> and myself right now, but we would be happy to accept contributions from others.<br><br>If you are interested in nwu development you should probably watch this blog, as I am going to write about recent developments here.</p>
+        </span>
+        </div>
+    <p>This article should give you a brief overview of what <a href="http://cetico.org/nwu" target="_blank">network-wide updates</a>, one of my projects, is about.<br><br>Network wide updates, or nwu, is a <a href="http://www.gnu.org/philosophy/free-sw.html">free software</a> package licensed under the <a href="http://gnu.org/licenses/gpl.html" target="_blank">GPL</a> (version 3 or later). It allows an administrator to remotely install software on and roll out security upgrades to managed computers. It is targeted at GNU/Linux systems using the <a href="http://en.wikipedia.org/wiki/Advanced_Packaging_Tool">Advanced Packaging Tool</a> (APT) for package management and thus should run fine on all GNU/Linux distributions based on <a href="http://debian.org">Debian GNU/Linux</a> (such as <a href="http://gnewsense.org">gNewSense</a> and all <a href="http://ubuntu.com">Ubuntu</a> flavors).<br><br><a name="more"></a>It further gathers data about all managed computers in a database, which gives the administrator an overview about which systems are managed, the hardware configurations they have, the software installed on them and pending security updates.<br><br>The system is split into two major components: the server, which is the central management point, and the clients, usually referred to as agents, which report to the server.<br><br>Now let's go into nasty technical details. nwu is implemented in <a href="http://python.org">Python</a>, using XML-RPC and python-gnutls (and this way the <a href="http://gnu.org/software/gnutls">GnuTLS</a> library) for secure communication between the server and its agents. It further makes use of X.509-certificate authentication and provides an integrated CA-system which simplifies use of this method a great deal.<br><br>Currently nwu is in an alpha development stage, but moving forward quite fast. We are expecting to be able to release a stable version quite soon.<br><br>The development team is made up of <a class="ext-link" href="http://cetico.org/tech"><span class="icon">Yves Junqueira</span></a> and myself right now, but we would be happy to accept contributions from others.<br><br>If you are interested in nwu development you should probably watch this blog, as I am going to write about recent developments here.</p>
     
     <ul class="pager"><li class="next">
             <a href="200801blue-gnu-news-for-gnus.html">Next post →</a>
@@ -72,18 +43,18 @@
         })();
     </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-    
-
     </div>
 
-    </div>
-    </div>
-    <!--End of body content-->
-</div>
-<div class="footerbox">
-    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
-</div>
-
+        </div>
+        <div id="sidebar">
+            <!--Sidebar content-->
+            <h1 id="blog-title">
+                <a href="../" title="Stephan's blog">Stephan's blog</a>
+            </h1>
+            
+            
+            <ul class="unstyled"><li>
+            
     <!-- Social buttons -->
     <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
     <a class="addthis_button_more">Share</a>
@@ -92,4 +63,15 @@
     </li><li><a class="addthis_button_linkedin"></a>
     </li><li><a class="addthis_button_twitter"></a>
     </li></ul></div>
-    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --></li><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+            </li><li>
+            </li></ul></div>
+        <div id="footer">
+            Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+        </div>
+    </div>
+    
+</body></html>

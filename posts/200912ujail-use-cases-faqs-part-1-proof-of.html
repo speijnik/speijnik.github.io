@@ -1,59 +1,30 @@
-<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>ujail: use cases, FAQs, part 1 &amp; proof of concept, part 2 | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="Stephan Peijnik"><title>ujail: use cases, FAQs, part 1 &amp; proof of concept, part 2 | Stephan's blog</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml"></head><body>
-<!-- Menubar -->
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-
-            <a class="brand" href="../">
-            Stephan's blog
-            </a>
-            <!-- Everything you want hidden at 940px or less, place within here -->
-            <div class="nav-collapse collapse">
-                <ul class="nav"><li><a href="../archive.html">Archives</a>
-            </li><li><a href="../categories/index.html">Tags</a>
-            </li><li><a href="../rss.xml">RSS</a>
-
-                </li></ul><ul class="nav pull-right"><li>
-    <a href="#" id="sourcelink">Source</a>
-    </li>
-
-                </ul></div>
-        </div>
-    </div>
-</div>
-<!-- End of Menubar -->
-<div class="container-fluid" id="container-fluid">
-    <!--Body content-->
-    <div class="row-fluid">
-    <div class="span2"></div>
-    <div class="span8">
-    
-    <div class="postbox">
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../rss.xml"></head><body class="home blog">
+    <script type="text/javascript">var addthis_config={"ui_language":"en"};</script><div id="wrap" style="width:850px">
+        <div id="container" style="width:560px">
+            
+    <div class="post">
     
     <h1>ujail: use cases, FAQs, part 1 &amp; proof of concept, part 2</h1>
 
-    <hr><small>
-        Posted: <time class="published" datetime="2009-12-09T10:16:00+01:00">2009-12-09 10:16</time>
-        
+        <div class="meta" style="background-color: rgb(234, 234, 234); ">                    
+        <span class="authordate">
+            Posted: 2009-12-09 10:16 
+               [<a href="//posts/200912ujail-use-cases-faqs-part-1-proof-of.html" id="sourcelink">Source</a>]
+        </span>
+        <br><span class="tags">Tags: 
+                    <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
+                    <a class="tag" href="../categories/ujail.html"><span class="badge badge-info">ujail</span></a>
+                    <a class="tag" href="../categories/gnulinux.html"><span class="badge badge-info">GNU/Linux</span></a>
+                    <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
+                </span>
+                <br><span class="authordate">
+            
 
-        
-          |  More posts about
-            <a class="tag" href="../categories/technology.html"><span class="badge badge-info">Technology</span></a>
-            <a class="tag" href="../categories/ujail.html"><span class="badge badge-info">ujail</span></a>
-            <a class="tag" href="../categories/gnulinux.html"><span class="badge badge-info">GNU/Linux</span></a>
-            <a class="tag" href="../categories/free-software.html"><span class="badge badge-info">free software</span></a>
-
-    </small>
-    <hr><p>As I ran out of time whilst writing the "<a href="http://techandsp.blogspot.com/2009/12/introducing-ujail-proof-of-concept.html">introducing ujail</a>" post on monday I would like to further elaborate on the idea, giving you some examples of possible use cases and then having a look at FAQs regarding ujail. Additionally I have created a second proof of concept that should be a lot faster, see below for more details.<br><br><b>Use cases of ujail</b> <br><br>Monday's post was rather technical, so let's have a look at possible use cases today.<br><br>The main reason for both having the idea of ujail and starting working on it is my web server. I am running quite a few (S)CGI scripts there and, even though running them as different users, on a per-vhost basis, I have the impression of the whole thing being a bit insecure.<br><br>Okay, PHP does provide its famous <i>open_basedir</i> feature, but I am also running some Python applications which I simply cannot restrict easily. My first ideas involved adding something similar to open_basedir to Python, followed by the idea of replacing some C library functions, like fopen and friends on startup time.<br><br>Whilst the adding open_basedir to Python would have involved changing a lot of Python's internals I soon discarded the library patching idea as those could be worked around by injected code directly invoking syscalls. It didn't take long for me to notice that I have to dig deeper. The idea of ujail was born and after coming up with the proof of concept this seems to be a viable solution.<br><br>Now ujail is not only about protecting a web server from its web applications, but could do a lot more, for example:<br><br></p><ul><li>Creating a sandbox for untrusted code (socket&amp;file i/o emulation)<br></li><li>Implementing some sort of personal firewall (socket-call only emulation)</li><li>Testing applications that perform low-level system operations (read: package managers and friends, filesystem emulation)</li></ul> I am sure you can come up with even more use-cases. What should be noted is that emulating a system call does not mean that one necessarily needs to emulate the whole filesystem. What can be done, for example, is patching through access to common files (libraries, executables, etc.) whilst maintaining a virtual filesystem for data that will eventually be modified. A copy-on-write approach is possible too, for example. There are multiple methods with which the multiple filesystem could be implemented, the most common would probably be using a state directory.<br><br><b>FAQs</b><br><br>There have been some questions about ujail in comments to my first post which I would like to answer. Also, I have been thinking about things that are different about ujail compared to other virtualization techniques. Feel free to add additional questions either in a comment or drop me an email: debian at sp dot or dot at.<br><br><ol><li>Could you change the license of ujail to ... ?<br><br>Not likely to happen. The proof of concept's license is GPLv3 and the actual code's license will be too. However, ujail is a userspace application that does not need any modifications to the kernel so there should be no problems with porting ujail from GNU/Linux to any other system.<br><br></li><li>Does ujail work on operating systems other than GNU/Linux?<br><br>Not yet. If it's technically possible to implement the technique on other operating systems I would be happy to accept patches.<br><br></li><li>Do I need to patch my kernel for ujail to work?<br><br>No, ujail is running in userspace. The only thing it needs is Linux with support for PTRACE_SYSEMU.<br><br></li><li>How is this approach different from using LD_PRELOAD?<br><br>With LD_PRELOAD one can replace library functions, but malicious code could still directly invoke syscalls, working around this protection completely. Also, statically linked binaries cannot be restricted with LD_PRELOAD.<br><br></li><li>How is this approach different from user-mode-linux?<br><br>User-mode-linux (UML) works by emulating a full kernel in userspace and allows you to virtualize a whole Linux instance (including a new init process, etc). ujail is about providing a way of restricting a single process (and its childs) inside a running system in terms of access to syscalls and the partial emulation of those.<br><br></li><li>How is this approach different from linux-vserver?<br><br>Linux-vserver is a kernel patch and runs in kernel space, as opposed to ujail, which works in userspace.<br>Also, linux-vserver works similarly to user-mode-linux, providing a fully virtualized Linux instance.<br><br></li><li>Does the account running ujail need any special privileges?<br><br>No, the only restrictions that apply are those of ptrace.<br><br></li><li>Where is the code?<br><br>Right now ujail is in a planning phase, and only the proof of concept code has been written and published. The actual ujail code is yet to be written and the code will be hosted on <a href="http://launchpad.net/ujail">launchpad.net</a>.<br><br></li></ol><b>Proof of concept, part 2</b><br><b><br></b>An anonymous person (who were you stranger?) added a comment to my first post, suggesting "<i>Also, why patch the process rather than just modifying its state and trapping into the kernel?</i>". I have had a look at this approach earlier, but it didn't work out. However, I decided to give it yet another try and created a <a href="http://bazaar.launchpad.net/%7Espeijnik/ujail/proof-of-concept/revision/3">second proof of concept</a>. That code does not require patching any code, but only modifies the instruction pointer (eip) and the first register (eax). This should be a lot faster than patching the code.<br><br>Technically the new main loop works by calling PTRACE_SYSEMU and waiting for a notification. It then saves the instruction pointer and switches to PTRACE_SYSCALL. As before it waits for the emulated syscall to exit and at this point sets eax from orig_eax and decreases the value of the instruction pointer by the size of the "<i>int $0x80</i>" instruction. Another call to PTRACE_SYSCALL resumes the process. The next event is the process actually entering the real syscall and yet another one leaving the syscall again. These are resumed by PTRACE_SYSCALL and PTRACE_SYSEMU respectively. So, comparing this with the first approach we are only modifying two registers now, instead of writing to the TEXT area of the running process.<br><br>Thanks should go to the anonymous commenter for making me give this approach another try.<br><br><b>Questions? Criticism? More ideas? Want to contribute?</b><br><br>Coming to an end I would yet again like to let you know that I am  open for questions, criticism, more ideas and contributions in general. So if you are interested in this topic come join the discussion by either dropping me an email, writing a comment to this post or replying to this post on your own blog.
+        </span>
+        </div>
+    <p>As I ran out of time whilst writing the "<a href="http://techandsp.blogspot.com/2009/12/introducing-ujail-proof-of-concept.html">introducing ujail</a>" post on monday I would like to further elaborate on the idea, giving you some examples of possible use cases and then having a look at FAQs regarding ujail. Additionally I have created a second proof of concept that should be a lot faster, see below for more details.<br><br><b>Use cases of ujail</b> <br><br>Monday's post was rather technical, so let's have a look at possible use cases today.<br><br>The main reason for both having the idea of ujail and starting working on it is my web server. I am running quite a few (S)CGI scripts there and, even though running them as different users, on a per-vhost basis, I have the impression of the whole thing being a bit insecure.<br><br>Okay, PHP does provide its famous <i>open_basedir</i> feature, but I am also running some Python applications which I simply cannot restrict easily. My first ideas involved adding something similar to open_basedir to Python, followed by the idea of replacing some C library functions, like fopen and friends on startup time.<br><br>Whilst the adding open_basedir to Python would have involved changing a lot of Python's internals I soon discarded the library patching idea as those could be worked around by injected code directly invoking syscalls. It didn't take long for me to notice that I have to dig deeper. The idea of ujail was born and after coming up with the proof of concept this seems to be a viable solution.<br><br>Now ujail is not only about protecting a web server from its web applications, but could do a lot more, for example:<br><br></p><ul><li>Creating a sandbox for untrusted code (socket&amp;file i/o emulation)<br></li><li>Implementing some sort of personal firewall (socket-call only emulation)</li><li>Testing applications that perform low-level system operations (read: package managers and friends, filesystem emulation)</li></ul> I am sure you can come up with even more use-cases. What should be noted is that emulating a system call does not mean that one necessarily needs to emulate the whole filesystem. What can be done, for example, is patching through access to common files (libraries, executables, etc.) whilst maintaining a virtual filesystem for data that will eventually be modified. A copy-on-write approach is possible too, for example. There are multiple methods with which the multiple filesystem could be implemented, the most common would probably be using a state directory.<br><br><b>FAQs</b><br><br>There have been some questions about ujail in comments to my first post which I would like to answer. Also, I have been thinking about things that are different about ujail compared to other virtualization techniques. Feel free to add additional questions either in a comment or drop me an email: debian at sp dot or dot at.<br><br><ol><li>Could you change the license of ujail to ... ?<br><br>Not likely to happen. The proof of concept's license is GPLv3 and the actual code's license will be too. However, ujail is a userspace application that does not need any modifications to the kernel so there should be no problems with porting ujail from GNU/Linux to any other system.<br><br></li><li>Does ujail work on operating systems other than GNU/Linux?<br><br>Not yet. If it's technically possible to implement the technique on other operating systems I would be happy to accept patches.<br><br></li><li>Do I need to patch my kernel for ujail to work?<br><br>No, ujail is running in userspace. The only thing it needs is Linux with support for PTRACE_SYSEMU.<br><br></li><li>How is this approach different from using LD_PRELOAD?<br><br>With LD_PRELOAD one can replace library functions, but malicious code could still directly invoke syscalls, working around this protection completely. Also, statically linked binaries cannot be restricted with LD_PRELOAD.<br><br></li><li>How is this approach different from user-mode-linux?<br><br>User-mode-linux (UML) works by emulating a full kernel in userspace and allows you to virtualize a whole Linux instance (including a new init process, etc). ujail is about providing a way of restricting a single process (and its childs) inside a running system in terms of access to syscalls and the partial emulation of those.<br><br></li><li>How is this approach different from linux-vserver?<br><br>Linux-vserver is a kernel patch and runs in kernel space, as opposed to ujail, which works in userspace.<br>Also, linux-vserver works similarly to user-mode-linux, providing a fully virtualized Linux instance.<br><br></li><li>Does the account running ujail need any special privileges?<br><br>No, the only restrictions that apply are those of ptrace.<br><br></li><li>Where is the code?<br><br>Right now ujail is in a planning phase, and only the proof of concept code has been written and published. The actual ujail code is yet to be written and the code will be hosted on <a href="http://launchpad.net/ujail">launchpad.net</a>.<br><br></li></ol><b>Proof of concept, part 2</b><br><b><br></b>An anonymous person (who were you stranger?) added a comment to my first post, suggesting "<i>Also, why patch the process rather than just modifying its state and trapping into the kernel?</i>". I have had a look at this approach earlier, but it didn't work out. However, I decided to give it yet another try and created a <a href="http://bazaar.launchpad.net/%7Espeijnik/ujail/proof-of-concept/revision/3">second proof of concept</a>. That code does not require patching any code, but only modifies the instruction pointer (eip) and the first register (eax). This should be a lot faster than patching the code.<br><br>Technically the new main loop works by calling PTRACE_SYSEMU and waiting for a notification. It then saves the instruction pointer and switches to PTRACE_SYSCALL. As before it waits for the emulated syscall to exit and at this point sets eax from orig_eax and decreases the value of the instruction pointer by the size of the "<i>int $0x80</i>" instruction. Another call to PTRACE_SYSCALL resumes the process. The next event is the process actually entering the real syscall and yet another one leaving the syscall again. These are resumed by PTRACE_SYSCALL and PTRACE_SYSEMU respectively. So, comparing this with the first approach we are only modifying two registers now, instead of writing to the TEXT area of the running process.<br><br>Thanks should go to the anonymous commenter for making me give this approach another try.<br><br><b>Questions? Criticism? More ideas? Want to contribute?</b><br><br>Coming to an end I would yet again like to let you know that I am  open for questions, criticism, more ideas and contributions in general. So if you are interested in this topic come join the discussion by either dropping me an email, writing a comment to this post or replying to this post on your own blog.
     
     <ul class="pager"><li class="previous">
             <a href="200912introducing-ujail-proof-of-concept.html">← Previous post</a>
@@ -77,18 +48,18 @@
         })();
     </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-    
-
     </div>
 
-    </div>
-    </div>
-    <!--End of body content-->
-</div>
-<div class="footerbox">
-    Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
-</div>
-
+        </div>
+        <div id="sidebar">
+            <!--Sidebar content-->
+            <h1 id="blog-title">
+                <a href="../" title="Stephan's blog">Stephan's blog</a>
+            </h1>
+            
+            
+            <ul class="unstyled"><li>
+            
     <!-- Social buttons -->
     <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
     <a class="addthis_button_more">Share</a>
@@ -97,4 +68,15 @@
     </li><li><a class="addthis_button_linkedin"></a>
     </li><li><a class="addthis_button_twitter"></a>
     </li></ul></div>
-    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></body></html>
+    <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --></li><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+            </li><li><a href="../rss.xml">RSS</a>
+
+            </li><li>
+            </li></ul></div>
+        <div id="footer">
+            Contents © 2013         <a href="mailto:stephan@peijnik.at">Stephan Peijnik</a> - Powered by         <a href="http://nikola.ralsina.com.ar">Nikola</a>
+        </div>
+    </div>
+    
+</body></html>
